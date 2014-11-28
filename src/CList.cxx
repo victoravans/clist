@@ -136,7 +136,13 @@ void CLIST::unique()
 template <class T>
 void CLIST::merge (CList& l)
 {
+	for (std::shared_ptr i = l.front(); i != l.m_Tail; i = i.getSuivant())
+	{
+		for (std::shared_ptr j = front(); j != m_Tail; j = j.getSuivant())
+		{
 
+		}
+	}
 }
 
 template <class T>
@@ -148,5 +154,18 @@ void CLIST::sort()
 template <class T>
 void CLIST::reverse()
 {
+	//swap head and tail sentinels
+	std::shared_ptr <CNode<T>> temp = m_Head;
+	m_Head.setNext (m_Tail.getPrevious());
+	m_Tail.setPrevious (temp.getNext());
 
+	m_Head.getNext().setPrevious(m_Head);
+	m_Tail.getPrevious().setNext(m_Tail);
+	//swap next and previous for each CNode of the list
+	for (std::shared_ptr i = m_Head.getNext(); i != m_Tail; i = i.getSuivant())
+	{
+		temp = i.getNext();
+		i.setNext(i.getPrevious());
+		i.setPrevious(temp);
+	}
 }
