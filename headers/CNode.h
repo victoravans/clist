@@ -1,13 +1,14 @@
 #ifndef __CNODE_H__
 #define __CNODE_H__
 
-template <typename T>
-typedef CNode <T> * PCNode;
+
+
 
 template <typename T>
 class CNode
 {
 private:
+	typedef CNode <T> * PCNode;
 	T m_Info;
 	PCNode m_Suivant_p;
 	PCNode m_Precedent_p;
