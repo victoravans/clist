@@ -1,9 +1,11 @@
 #ifndef __CLIST_H__
 #define __CLIST_H__
 
+
 #include <cstddef>		//size_t
 #include <memory>		//shared_ptr
 #include "CNode.h"
+
 
 namespace nsSdD
 {

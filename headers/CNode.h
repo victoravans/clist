@@ -1,35 +1,31 @@
-/*
- * CNode.h
- *
- *  Created on: 28 nov. 2014
- *      Author: m13009698
- */
+#ifndef __CNODE_H__
+#define __CNODE_H__
 
-#ifndef CNODE_H_
-#define CNODE_H_
+template <typename T>
+typedef CNode <T> * PCNode;
 
-namespace nsSdS
+template <typename T>
+class CNode
 {
-	template <typename T>
-	class CNode {
+private:
+	T m_info;
+	PCNode p_Suivant;
+	PCNode p_Precedent;
 
-		typedef CNode <T> * PCNode;
+public:
+	CNode();
+	virtual ~CNode();
 
-		T m_info;
-		PCNode p_Suivant;
-		PCNode p_Precedent;
+	T getInfo();
+	PCNode getSuivant();
+	PCNode getPrecedent();
 
-	public:
-		CNode();
-		virtual ~CNode();
+	void setInfo(T & info);
+	void setSuivant(const PCNode suivant);
+	void setPrecedent(const PCNode precedent);
 
-		T getInfo();
-		PCNode getSuivant();
-		PCNode getPrecedent();
 
-		void setInfo(T & info);
-		void setSuivant(const PCNode suivant);
-		void setPrecedent(const PCNode precedent);
-	};
-}
-#endif /* CNODE_H_ */
+};
+
+
+#endif /* __CNODE_H__ */
