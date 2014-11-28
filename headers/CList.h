@@ -9,8 +9,10 @@ namespace nsSdD
 template <class T>
 class CList
 {
-	CNode m_Head;
-	CNode m_Tail;
+private:
+	CNode<T> m_Head;
+	CNode<T> m_Tail;
+public:
 	explicit CList ();
 	explicit CList (std::size_t n);
 	CList (std::size_t n, const T& val);

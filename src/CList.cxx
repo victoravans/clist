@@ -1,12 +1,14 @@
 #include "CList.h"
 
 
-explicit nsSdD::CList::CList ()
+template <class T>
+explicit nsSdD::CList<T>::CList ()
 {
 
 }
 
-explicit nsSdD::CList::CList (std::size_t n)
+template <class T>
+explicit nsSdD::CList<T>::CList (std::size_t n)
 {
 
 }
@@ -17,7 +19,8 @@ nsSdD::CList<T>::CList (std::size_t n, const T& val)
 
 }
 
-nsSdD::CList::CList (const CList& x)
+template <class T>
+nsSdD::CList<T>::CList (const CList& x)
 {
 
 }
