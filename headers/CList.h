@@ -50,6 +50,7 @@ public:
 	void sort();	//sorts the list using operator<
 	void reverse();	//reverse the order of the elements in the list
 
+
 };
 }
 
