@@ -12,7 +12,11 @@ CLIST::CList ()
 template <class T>
 CLIST::CList (std::size_t n)
 {
+	m_Head.setInfo("HEAD");
+	m_Head.setNext(m_Tail);
 
+	m_Tail.setInfo("TAIL");
+	m_Tail.setPrevious(m_Head)
 }
 
 template <class T>
