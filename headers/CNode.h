@@ -2,16 +2,17 @@
 #define __CNODE_H__
 
 
+#include <memory>		//shared_ptr
 
 
 template <typename T>
 class CNode
 {
 private:
-	typedef CNode <T> * PCNode;
+	typedef std::shared_ptr <CNode<T>> PCNode;
 	T m_Info;
-	PCNode m_Suivant_p;
-	PCNode m_Precedent_p;
+	PCNode m_Suivant;
+	PCNode m_Precedent;
 
 public:
 	CNode(T info, PCNode suivant, PCNode precedent);
@@ -24,8 +25,6 @@ public:
 	void setInfo(T & info);
 	void setSuivant(const PCNode suivant);
 	void setPrecedent(const PCNode precedent);
-
-
 };
 
 
