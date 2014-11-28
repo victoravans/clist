@@ -8,12 +8,12 @@ template <typename T>
 class CNode
 {
 private:
-	T m_info;
-	PCNode p_Suivant;
-	PCNode p_Precedent;
+	T m_Info;
+	PCNode m_Suivant_p;
+	PCNode m_Precedent_p;
 
 public:
-	CNode();
+	CNode(T info, PCNode suivant, PCNode precedent);
 	virtual ~CNode();
 
 	T getInfo();

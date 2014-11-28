@@ -1,7 +1,8 @@
-#include "../headers/CNode.h"
+#include "CNode.h"
 
 template <typename T>
-CNode<T>::CNode()
+CNode<T>::CNode(T info, PCNode suivant, PCNode precedent)
+	:m_Info(info), m_Suivant_p(suivant), m_Precedent_p(precedent)
 {
 
 }
@@ -15,19 +16,19 @@ CNode<T>::~CNode()
 template <typename T>
 T CNode<T>::getInfo()
 {
-	return m_info;
+	return m_Info;
 }
 
 template <typename T>
 PCNode CNode<T>::getSuivant()
 {
-	return m_Suivant;
+	return m_Suivant_p;
 }
 
 template <typename T>
 PCNode CNode<T>::getPrecedent()
 {
-	return m_Precedent;
+	return m_Precedent_p;
 }
 
 template <typename T>
@@ -39,11 +40,11 @@ void CNode<T>::setInfo(T & info)
 template <typename T>
 void CNode<T>::setSuivant(const PCNode suivant)
 {
-	m_Suivant = suivant;
+	m_Suivant_p = suivant;
 }
 
 template <typename T>
 void CNode<T>::setPrecedent(const PCNode precedent)
 {
-	m_Precedent = precedent;
+	m_Precedent_p = precedent;
 }
