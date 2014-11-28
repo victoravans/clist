@@ -22,8 +22,8 @@ public:
 	std::shared_ptr <CNode<T>> getPrecedent();
 
 	void setInfo(T & info);
-	void setSuivant(const std::shared_ptr <CNode<T>> suivant);
-	void setPrecedent(const std::shared_ptr <CNode<T>> precedent);
+	void setSuivant(const std::shared_ptr <CNode<T>> next);
+	void setPrecedent(const std::shared_ptr <CNode<T>> prev);
 };
 
 

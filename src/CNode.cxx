@@ -38,13 +38,13 @@ void CNode<T>::setInfo(T & info)
 }
 
 template <typename T>
-void CNode<T>::setSuivant(const std::shared_ptr <CNode<T>> suivant)
+void CNode<T>::setSuivant(const std::shared_ptr <CNode<T>> next)
 {
-	m_Next = suivant;
+	m_Next = next;
 }
 
 template <typename T>
-void CNode<T>::setPrecedent(const std::shared_ptr <CNode<T>> precedent)
+void CNode<T>::setPrecedent(const std::shared_ptr <CNode<T>> prev)
 {
-	m_Previous = precedent;
+	m_Previous = prev;
 }
