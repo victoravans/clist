@@ -2,13 +2,13 @@
 
 
 template <class T>
-explicit nsSdD::CList<T>::CList ()
+nsSdD::CList<T>::CList ()
 {
 
 }
 
 template <class T>
-explicit nsSdD::CList<T>::CList (std::size_t n)
+nsSdD::CList<T>::CList (std::size_t n)
 {
 
 }
