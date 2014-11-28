@@ -1,12 +1,5 @@
-/*
- * CNode.h
- *
- *  Created on: 28 nov. 2014
- *      Author: m13009698
- */
-
-#ifndef CNODE_H_
-#define CNODE_H_
+#ifndef __CNODE_H__
+#define __CNODE_H__
 
 template <typename T>
 class CNode {
@@ -28,4 +21,4 @@ public:
 	void
 };
 
-#endif /* CNODE_H_ */
+#endif /* __CNODE_H__ */

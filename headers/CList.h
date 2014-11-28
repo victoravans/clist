@@ -1,3 +1,6 @@
+#ifndef __CLIST_H__
+#define __CLIST_H__
+
 #include <cstddef>
 #include "CNode.h"
 
@@ -14,3 +17,5 @@ class CList
 	CList (const CList& x);
 };
 }
+
+#endif /* __CLIST_H__ */
