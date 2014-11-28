@@ -1,8 +1,8 @@
 #include "CNode.h"
 
 template <typename T>
-CNode<T>::CNode(T info, PCNode suivant, PCNode precedent)
-	:m_Info(info), m_Suivant_p(suivant), m_Precedent_p(precedent)
+CNode<T>::CNode(T info, std::shared_ptr <CNode<T>> suivant, std::shared_ptr <CNode<T>> precedent)
+	:m_Info(info), m_Next(suivant), m_Previous(precedent)
 {
 
 }
@@ -20,15 +20,15 @@ T CNode<T>::getInfo()
 }
 
 template <typename T>
-PCNode CNode<T>::getSuivant()
+std::shared_ptr <CNode<T>> CNode<T>::getSuivant()
 {
-	return m_Suivant_p;
+	return m_Next;
 }
 
 template <typename T>
-PCNode CNode<T>::getPrecedent()
+std::shared_ptr <CNode<T>> CNode<T>::getPrecedent()
 {
-	return m_Precedent_p;
+	return m_Previous;
 }
 
 template <typename T>
@@ -38,13 +38,13 @@ void CNode<T>::setInfo(T & info)
 }
 
 template <typename T>
-void CNode<T>::setSuivant(const PCNode suivant)
+void CNode<T>::setSuivant(const std::shared_ptr <CNode<T>> suivant)
 {
-	m_Suivant_p = suivant;
+	m_Next = suivant;
 }
 
 template <typename T>
-void CNode<T>::setPrecedent(const PCNode precedent)
+void CNode<T>::setPrecedent(const std::shared_ptr <CNode<T>> precedent)
 {
-	m_Precedent_p = precedent;
+	m_Previous = precedent;
 }

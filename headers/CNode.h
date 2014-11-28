@@ -9,22 +9,21 @@ template <typename T>
 class CNode
 {
 private:
-	typedef std::shared_ptr <CNode<T>> PCNode;
 	T m_Info;
-	PCNode m_Suivant;
-	PCNode m_Precedent;
+	std::shared_ptr <CNode<T>> m_Next;
+	std::shared_ptr <CNode<T>> m_Previous;
 
 public:
-	CNode(T info, PCNode suivant, PCNode precedent);
+	CNode(T info, std::shared_ptr <CNode<T>> next, std::shared_ptr <CNode<T>> previous);
 	virtual ~CNode();
 
 	T getInfo();
-	PCNode getSuivant();
-	PCNode getPrecedent();
+	std::shared_ptr <CNode<T>> getSuivant();
+	std::shared_ptr <CNode<T>> getPrecedent();
 
 	void setInfo(T & info);
-	void setSuivant(const PCNode suivant);
-	void setPrecedent(const PCNode precedent);
+	void setSuivant(const std::shared_ptr <CNode<T>> suivant);
+	void setPrecedent(const std::shared_ptr <CNode<T>> precedent);
 };
 
 
