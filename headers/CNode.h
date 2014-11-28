@@ -18,12 +18,12 @@ public:
 	virtual ~CNode();
 
 	T getInfo();
-	std::shared_ptr <CNode<T>> getSuivant();
-	std::shared_ptr <CNode<T>> getPrecedent();
+	std::shared_ptr <CNode<T>> getNext();
+	std::shared_ptr <CNode<T>> getPrevious();
 
 	void setInfo(T & info);
-	void setSuivant(const std::shared_ptr <CNode<T>> next);
-	void setPrecedent(const std::shared_ptr <CNode<T>> prev);
+	void setNext(const std::shared_ptr <CNode<T>> next);
+	void setPrevious(const std::shared_ptr <CNode<T>> prev);
 };
 
 
