@@ -4,8 +4,6 @@
 
 #include <cstddef>		//size_t
 #include <memory>		//shared_ptr
-#include "CNode.h"
-
 
 namespace nsSdD
 {
@@ -13,8 +11,21 @@ namespace nsSdD
 	class CList
 	{
 	private:
-		std::shared_ptr <CNode<T>> m_Head;	//head sentinel
-		std::shared_ptr <CNode<T>> m_Tail;	//tail sentinel
+		class CNode
+		{
+			T m_Info;
+			std::shared_ptr <CNode> m_Next;
+			std::shared_ptr <CNode> m_Previous;
+
+
+			CNode(T info, std::shared_ptr <CNode> suivant, std::shared_ptr <CNode> precedent)
+				:m_Info(info), m_Next(suivant), m_Previous(precedent){}
+			~CNode();
+		};
+
+
+		std::shared_ptr <CNode> m_Head;	//head sentinel
+		std::shared_ptr <CNode> m_Tail;	//tail sentinel
 
 		CList split (CList l);
 
@@ -30,11 +41,11 @@ namespace nsSdD
 		bool empty ();		//returns true if the list is empty
 		size_t size ();		//returns the number of elements of the list
 
-		CNode<T>&	front ();				//reference to the first element
-		const CNode<T>&	front () const;		//const reference to the first element
+		CNode&	front ();				//reference to the first element
+		const CNode&	front () const;		//const reference to the first element
 
-		CNode<T>&	back ();				//reference to the last element
-		const CNode<T>&	back() const;		//const reference to the last element
+		CNode&	back ();				//reference to the last element
+		const CNode&	back() const;		//const reference to the last element
 
 		void push_front (const T& val);		//inserts an element at the beginning of the list (after the head sentinel)
 		void push_back (const T& val);		//inserts an element at the end of the list (before the tail sentinel)

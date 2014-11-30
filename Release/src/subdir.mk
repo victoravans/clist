@@ -5,17 +5,14 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 CXX_SRCS += \
 ../src/CList.cxx \
-../src/CNode.cxx \
 ../src/main.cxx 
 
 OBJS += \
 ./src/CList.o \
-./src/CNode.o \
 ./src/main.o 
 
 CXX_DEPS += \
 ./src/CList.d \
-./src/CNode.d \
 ./src/main.d 
 
 
