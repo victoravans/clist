@@ -4,33 +4,46 @@
 
 #include <cstddef>		//size_t
 #include <memory>		//shared_ptr
+#include <ostream>		//ostream
+#include <iostream>		// A  SUPPRIMER A LA FIN
 
 namespace nsSdD
 {
 	template <class T>
 	class CList
 	{
-	private:
+	public:
 		class CNode
 		{
+		public:
 			T m_Info;
 			std::shared_ptr <CNode> m_Next;
 			std::shared_ptr <CNode> m_Previous;
 
-
-			CNode(T info, std::shared_ptr <CNode> suivant, std::shared_ptr <CNode> precedent)
+			CNode () {}
+			CNode(T info, std::shared_ptr <CNode> suivant = nullptr, std::shared_ptr <CNode> precedent = nullptr)
 				:m_Info(info), m_Next(suivant), m_Previous(precedent){}
-			~CNode();
+			~CNode() {}
+
+			friend std::ostream& operator<<(std::ostream& os, const CNode& elt)
+			{
+				os << elt.m_Info;
+				return os;
+			}
 		};
 
-
+	private:
 		std::shared_ptr <CNode> m_Head;	//head sentinel
 		std::shared_ptr <CNode> m_Tail;	//tail sentinel
 
 		CList split (CList l);
 
 	public:
-		explicit CList ();							//empty list
+		explicit CList ():m_Head (new CNode()), m_Tail (new CNode())					//empty list
+		{
+			m_Head->m_Next = m_Tail;
+			m_Tail->m_Previous = m_Head;
+		}
 		explicit CList (std::size_t n);				//list of n empty elements
 		CList (std::size_t n, const T& val);		//list of n elements of value val
 		CList (const CList& x);						//list copied of another list
@@ -62,8 +75,15 @@ namespace nsSdD
 		void merge (CList& l); //transfers all of l's elements in the list, requieres ordered lists. l then becomes empty
 		void sort();	//sorts the list using operator<
 		void reverse();	//reverse the order of the elements in the list
-
-
+		void AfficherList ()
+		{
+			for (std::shared_ptr <typename CList<T>::CNode> i (m_Head->m_Next);
+				 i != m_Tail;
+				 i = i->m_Next)
+			{
+				std::cout << *i << std::endl << std::flush;
+			}
+		}
 	};
 }
 
