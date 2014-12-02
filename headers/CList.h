@@ -39,11 +39,7 @@ namespace nsSdD
 		CList split (CList l);
 
 	public:
-		explicit CList ():m_Head (new CNode()), m_Tail (new CNode())					//empty list
-		{
-			m_Head->m_Next = m_Tail;
-			m_Tail->m_Previous = m_Head;
-		}
+		explicit CList ();				//empty list
 		explicit CList (std::size_t n);				//list of n empty elements
 		CList (std::size_t n, const T& val);		//list of n elements of value val
 		CList (const CList& x);						//list copied of another list
@@ -51,8 +47,8 @@ namespace nsSdD
 		CList& operator= (const CList& l);			//duplicates every element of list l to create another one
 		void assign (std::size_t n, const T& val);	//fills the list with n elements, each a copy of val
 
-		bool empty ();		//returns true if the list is empty
-		size_t size ();		//returns the number of elements of the list
+		bool empty () const;		//returns true if the list is empty
+		size_t size () const;		//returns the number of elements of the list
 
 		CNode&	front ();				//reference to the first element
 		const CNode&	front () const;		//const reference to the first element
@@ -86,5 +82,7 @@ namespace nsSdD
 		}
 	};
 }
+
+#include "CList.hxx"
 
 #endif /* __CLIST_H__ */

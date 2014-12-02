@@ -1,53 +1,78 @@
-#include "CList.h"
-#include <unistd.h>
-
-
+#pragma once
 
 #define CLIST nsSdD::CList<T>
 
 
+template <class T>
+CLIST::CList ()
+: m_Head (std::shared_ptr <CNode>  (new CNode(T(),m_Tail,nullptr))),
+  m_Tail (std::shared_ptr <CNode>  (new CNode(T(),nullptr,m_Head))){}
+
 
 template <class T>
 CLIST::CList (std::size_t n)
+: m_Head (std::shared_ptr <CNode>  (new CNode(T(),m_Tail,nullptr))),
+m_Tail (std::shared_ptr <CNode>  (new CNode(T(),nullptr,m_Head)))
 {
-	m_Head.setInfo("HEAD");
-	m_Head.setNext(m_Tail);
-	m_Tail.setInfo("TAIL");
-	m_Tail.setPrevious(m_Head);
+	resize (n);
 }
 
 template <class T>
 CLIST::CList (std::size_t n, const T& val)
+: m_Head (std::shared_ptr <CNode>  (new CNode(T(),m_Tail,nullptr))),
+m_Tail (std::shared_ptr <CNode>  (new CNode(T(),nullptr,m_Head)))
 {
-
+	resize (n, val);
 }
 
 template <class T>
 CLIST::CList (const CList& x)
+: m_Head (std::shared_ptr <CNode>  (new CNode(T(),m_Tail,nullptr))),
+m_Tail (std::shared_ptr <CNode>  (new CNode(T(),nullptr,m_Head)))
 {
-
+	this = x;
 }
 
 template <class T>
 CLIST& CLIST::operator= (const CList& l)
 {
+	size_t lSize = l.size();
+	if (lSize != size())
+		resize (lSize);
 
+	std::shared_ptr <CNode> i = m_Head;
+	std::shared_ptr <CNode> j = l.m_Head;
+	for (;i != m_Tail; i = i->m_Next, j=j->m_Next)
+		i->m_Info = j->m_Info;
+	return *this;
 }
 
 template <class T>
 void CLIST::assign (std::size_t n, const T& val)
 {
-
+	size_t Size = size();
+	if (n < Size)
+	{
+		resize (n);
+		for (std::shared_ptr<CNode> i = m_Head->m_Next; i != m_Tail; i = i->m_Next)
+			i->m_Info = val;
+	}
+	else
+	{
+		for (std::shared_ptr<CNode> i = m_Head->m_Next; i != m_Tail; i = i->m_Next)
+			i->m_Info = val;
+		if (n != Size) resize (n, val);
+	}
 }
 
 template <class T>
-bool CLIST::empty ()
+bool CLIST::empty () const
 {
 	return m_Head->m_Next == m_Tail;
 }
 
 template <class T>
-size_t CLIST::size ()
+size_t CLIST::size () const
 {
 	size_t count = 0;
 	for (std::shared_ptr <CNode> i (m_Head->m_Next); i != m_Tail; i = i->m_Next)
@@ -96,6 +121,7 @@ void CLIST::push_back (const T& val)
 template <class T>
 void CLIST::pop_front()
 {
+	if (m_Head->m_Next == m_Tail) return;
 	m_Head->m_Next = m_Head->m_Next->m_Next;
 	m_Head->m_Next->m_Previous = m_Head;
 }
@@ -103,6 +129,7 @@ void CLIST::pop_front()
 template <class T>
 void CLIST::pop_back()
 {
+	if (m_Head->m_Next == m_Tail) return;
 	m_Tail->m_Previous= m_Tail->m_Previous->m_Previous;
 	m_Tail->m_Previous->m_Next = m_Tail;
 }
@@ -117,34 +144,45 @@ void CLIST::swap (CList& l)
 template <class T>
 void CLIST::resize (std::size_t n, T val)
 {
-	if (n > size())
-	{
-		m_Tail->m_Info = val;
-		unsigned i = size();
-		std::shared_ptr <CNode> ptr = m_Tail;
-		for (; i < n; ++i, ptr = ptr->m_Next)
-		{
-			ptr->m_Next = std::shared_ptr <CNode> (new CNode (val));
-			ptr->m_Next->m_Previous = ptr;
-		}
-		m_Tail = ptr;
-	}
-	else if (n < size())
-	{
+	size_t Size = size();
 
-	}
+	if (n > Size)
+		while (Size++ < n)
+			push_back (val);
+
+	else if (n < Size)
+		for (size_t i = Size; i > n; --i)
+		{
+			m_Tail->m_Previous->m_Previous->m_Next = m_Tail;
+			m_Tail->m_Previous = m_Tail->m_Previous->m_Previous;
+		}
 }
 
 template <class T>
 void CLIST::clear()
 {
-
+	if (size () == 0) return;
+	for (std::shared_ptr <CNode>i = m_Head->m_Next->m_Next;; i = i->m_Next)
+	{
+		i->m_Previous->m_Next = nullptr;
+		i->m_Previous->m_Previous = nullptr;
+		if (i == m_Tail)
+		{
+			m_Head->m_Next = i;
+			i->m_Previous = m_Head;
+		}
+	}
 }
 
 template <class T>
 void CLIST::remove (const T& val)
 {
-
+	for (std::shared_ptr <CNode>i = m_Head->m_Next; i != m_Tail; i = i->m_Next)
+		if (i->m_Info == val)
+		{
+			i->m_Previous->m_Next = i->m_Next;
+			i->m_Next->m_Previous = i->m_Previous;
+		}
 }
 
 template <class T>
