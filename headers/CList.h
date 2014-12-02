@@ -32,7 +32,7 @@ namespace nsSdD
 			}
 		};
 
-	private:
+	public:
 		std::shared_ptr <CNode> m_Head;	//head sentinel
 		std::shared_ptr <CNode> m_Tail;	//tail sentinel
 
