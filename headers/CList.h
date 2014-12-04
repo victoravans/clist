@@ -23,12 +23,6 @@ namespace nsSdD
 			CNode(T info = T(), std::shared_ptr <CNode> suivant = nullptr, std::shared_ptr <CNode> precedent = nullptr)
 				:m_Info(info), m_Next(suivant), m_Previous(precedent){}
 			~CNode() {}
-
-			friend std::ostream& operator<<(std::ostream& os, const CNode& elt)
-			{
-				os << elt.m_Info;
-				return os;
-			}
 		};
 
 	public:
@@ -74,15 +68,8 @@ namespace nsSdD
 		void merge (CList& l); //transfers all of l's elements in the list, requieres ordered lists. l then becomes empty
 		void sort();	//sorts the list using operator<
 		void reverse();	//reverse the order of the elements in the list
-		void AfficherList ()
-		{
-			for (std::shared_ptr <typename CList<T>::CNode> i (m_Head->m_Next);
-				 i != m_Tail;
-				 i = i->m_Next)
-			{
-				std::cout << *i << std::endl << std::flush;
-			}
-		}
+
+		void edit (bool jumpLines = false); // Afficher la liste
 	};
 }
 

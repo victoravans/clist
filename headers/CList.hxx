@@ -326,3 +326,15 @@ void CLIST::reverse()
 	std::swap (m_Head->m_Next->m_Next, m_Tail->m_Previous->m_Previous);
 	std::swap (m_Head->m_Next, m_Tail->m_Previous);
 }
+
+template <class T>
+void CLIST::edit (bool jumpLines /* = false */)
+{
+	for (std::shared_ptr <CNode> i = m_Head->m_Next; i != m_Tail; i = i->m_Next)
+	{
+		std::cout << i->m_Info;
+		if (jumpLines) std::cout << std::endl;
+		else std::cout << "; ";
+		std::cout << std::flush;
+	}
+}
