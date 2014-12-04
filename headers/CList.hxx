@@ -175,7 +175,7 @@ void CLIST::swap (CList& l)
 }
 
 template <class T>
-void CLIST::resize (std::size_t n, T val)
+void CLIST::resize (std::size_t n, T val /* = T() */)
 {
 	size_t Size = size();
 

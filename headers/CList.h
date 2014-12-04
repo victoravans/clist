@@ -68,8 +68,7 @@ namespace nsSdD
 		void merge (CList& l); //transfers all of l's elements in the list, requieres ordered lists. l then becomes empty
 		void sort();	//sorts the list using operator<
 		void reverse();	//reverse the order of the elements in the list
-
-		void edit (bool jumpLines = false); // Afficher la liste
+		void edit (bool jumpLines = false);
 	};
 }
 
