@@ -55,6 +55,8 @@ namespace nsSdD
 		T&	back ();				//reference to the last element
 		const T&	back() const;		//const reference to the last element
 
+		T&	operator[] (std::size_t position) const;
+
 		void push_front (const T& val);		//inserts an element at the beginning of the list (after the head sentinel)
 		void push_back (const T& val);		//inserts an element at the end of the list (before the tail sentinel)
 		void pop_front();	//deletes the first element of the list

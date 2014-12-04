@@ -104,6 +104,40 @@ const T& CLIST::back() const
 }
 
 template <class T>
+T&	CLIST::operator[] (std::size_t position) const
+{
+	size_t Size = size ();
+	if (position > size () - 1)
+		throw std::out_of_range ("Trying to access an element out of the CList's range!");
+	std::shared_ptr <CNode> ptr;
+	std::size_t i;
+	if (position > Size)
+	{
+		ptr = m_Tail->m_Previous;
+		i = Size - 1;
+	}
+	else
+	{
+		ptr = m_Head->m_Next;
+		i = 0;
+	}
+	while (true)
+	{
+		if (i == position) return ptr->m_Info;
+		if (position > Size)
+		{
+			ptr = ptr->m_Previous;
+			--i;
+		}
+		else
+		{
+			ptr = ptr->m_Next;
+			++i;
+		}
+	}
+}
+
+template <class T>
 void CLIST::push_front (const T& val)
 {
 	m_Head->m_Next->m_Previous = std::make_shared <CNode> (val, m_Head->m_Next, m_Head);
