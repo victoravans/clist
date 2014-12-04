@@ -99,6 +99,8 @@ namespace {
 		IZI_ASSERT(list1.empty());
 		IZI_ASSERT(!list2.empty());
 		IZI_ASSERT(!list3.empty());
+		cout << "Termine"
+			<< endl;
 
 		cout << "Fonctionnalite testee :" << endl
 			<< "Methode assign()" << endl;
@@ -108,7 +110,23 @@ namespace {
 	}//EmptyTest()
 
 
+	void Size_tTest(){
+		cout << "Creation d'une liste de taille " << size << "."
+			<< endl;
+		CList<int>list(size);
+		cout << "Creation terminee, debut du test de la methode size()..."
+			<< endl
+			<< endl
+			<< endl;
+		IZI_ASSERT(list.size() == size);
+		cout << "Termine"
+			<< endl;
+		cout << "Fonctionalite testee :" << endl
+			<< "Methode size()" << endl;
 
+		char c;
+		cin >> c;
+	}//Size_tTest()
 
 	
 
@@ -116,6 +134,7 @@ namespace {
 
 int main(){
 	//ConstructorTest();
-	EmptyTest();
+	//EmptyTest();
+	//Size_tTest();
 	return 0;
 }
