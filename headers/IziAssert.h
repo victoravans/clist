@@ -14,8 +14,9 @@
 #pragma once
 
 #include <iostream>
+#include <string>
 
-#define IZI_ASSERT(condition) iziAssert(condition, #condition, __FILE__, __LINE__, __func__);
+#define IZI_ASSERT(condition) iziAssert(condition, #condition, __FILE__, __LINE__, __FUNCTION__);
 
 namespace {
     void iziAssert(bool success, const char* condition, const char* fileName, const int lineNumber, const char* functionName)

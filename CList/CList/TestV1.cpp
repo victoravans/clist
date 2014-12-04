@@ -17,13 +17,13 @@ namespace {
 			<<endl
 			<< "Creation of a second list using the copy constructor" 
 			<< endl;
-		CList<int>list2(list);
+		CList<int>list2 = list;
 		cout << "Done" 
 			<<endl
 			<< "Testing in progress"
 		   	<< endl;
 
-		for (int i (0); i < size; ++i){
+		for (unsigned i (0); i < size; ++i){
 			IZI_ASSERT(list [i] == value);
 			IZI_ASSERT(list [i] == list2[i]);
 		}//for
@@ -42,7 +42,7 @@ namespace {
 			<<"Testing in progress"
 			<<endl;
 
-		for (int i(0); i < size; ++i) IZI_ASSERT(list3[i] == value);
+		for (unsigned i(0); i < size; ++i) IZI_ASSERT(list3[i] == value);
 
 		cout << "Done"
 			<< endl
@@ -54,7 +54,7 @@ namespace {
 			<< "Testing in progress"
 			<< endl;
 
-		for (int i(0); i < size; ++i) IZI_ASSERT(list4[i] == list[i]);
+		for (unsigned i(0); i < size; ++i) IZI_ASSERT(list4[i] == list[i]);
 
 			cout << "Done"
 				<< endl;
@@ -77,3 +77,8 @@ namespace {
 	
 
 }//namespace
+
+int main(){
+	ConstructorTest();
+	return 0;
+}
