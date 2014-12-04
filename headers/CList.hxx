@@ -4,33 +4,30 @@
 
 
 template <class T>
-CLIST::CList () :m_Head (make_shared<CNode> ()), m_Tail (make_shared<CNode> ())
+CLIST::CList ():m_Head (make_shared<CNode> ()), m_Tail (make_shared<CNode> ())
 {
 	m_Head->m_Next = m_Tail;
 	m_Tail->m_Previous = m_Head;
 }
 
-
 template <class T>
-CLIST::CList (std::size_t n)
-: m_Head (std::shared_ptr <CNode>  (new CNode(T(),m_Tail,nullptr))),
-m_Tail (std::shared_ptr <CNode>  (new CNode(T(),nullptr,m_Head)))
+CLIST::CList (std::size_t n):m_Head (make_shared<CNode> ()), m_Tail (make_shared<CNode> ())
 {
+	m_Head->m_Next = m_Tail;
+	m_Tail->m_Previous = m_Head;
 	resize (n);
 }
 
 template <class T>
-CLIST::CList (std::size_t n, const T& val)
-: m_Head (std::shared_ptr <CNode>  (new CNode(T(),m_Tail,nullptr))),
-m_Tail (std::shared_ptr <CNode>  (new CNode(T(),nullptr,m_Head)))
+CLIST::CList (std::size_t n, const T& val):m_Head (make_shared<CNode> ()), m_Tail (make_shared<CNode> ())
 {
+	m_Head->m_Next = m_Tail;
+	m_Tail->m_Previous = m_Head;
 	resize (n, val);
 }
 
 template <class T>
-CLIST::CList (const CList& x)
-: m_Head (std::shared_ptr <CNode>  (new CNode(T(),m_Tail,nullptr))),
-m_Tail (std::shared_ptr <CNode>  (new CNode(T(),nullptr,m_Head)))
+CLIST::CList (const CList& x):m_Head (make_shared<CNode> ()), m_Tail (make_shared<CNode> ())
 {
 	this = x;
 }
@@ -83,40 +80,40 @@ size_t CLIST::size () const
 }
 
 template <class T>
-typename CLIST::CNode& CLIST::front ()
+T& CLIST::front ()
 {
-	return *(m_Head->m_Next);
+	return m_Head->m_Next->m_Info;
 }
 
 template <class T>
-const typename CLIST::CNode& CLIST::front () const
+const T& CLIST::front () const
 {
-	return *(m_Head->m_Next);
+	return m_Head->m_Next->m_Info;
 }
 
 template <class T>
-typename CLIST::CNode& CLIST::back ()
+T& CLIST::back ()
 {
-	return *(m_Tail.get()->m_Previous);
+	return m_Tail->m_Previous->m_Info;
 }
 
 template <class T>
-const typename CLIST::CNode& CLIST::back() const
+const T& CLIST::back() const
 {
-	return *(m_Tail.get()->m_Previous);
+	return m_Tail->m_Previous->m_Info;
 }
 
 template <class T>
 void CLIST::push_front (const T& val)
 {
-	m_Head->m_Next->m_Previous = std::shared_ptr <CNode>  (new CNode(val, m_Head->m_Next, m_Head));
+	m_Head->m_Next->m_Previous = std::make_shared <CNode> (val, m_Head->m_Next, m_Head);
 	m_Head->m_Next = m_Head->m_Next->m_Previous;
 }
 
 template <class T>
 void CLIST::push_back (const T& val)
 {
-	m_Tail->m_Previous->m_Next = std::shared_ptr <CNode> (new CNode(val, m_Tail, m_Tail->m_Previous));;
+	m_Tail->m_Previous->m_Next = std::make_shared <CNode> (val, m_Tail, m_Tail->m_Previous);
 	m_Tail->m_Previous = m_Tail->m_Previous->m_Next;
 }
 
@@ -188,6 +185,39 @@ void CLIST::remove (const T& val)
 }
 
 template <class T>
+bool CLIST::insert (const T & position, const T & val)
+{
+	if (size () == 0)
+	{
+		push_front (val);
+		return true;
+	}
+	for (std::shared_ptr <CNode>i = m_Head; i->m_Next != m_Tail; i = i->m_Next)
+		if (i->m_Next->m_Info == position)
+		{
+			i->m_Next->m_Previous = std::make_shared <CNode> (val, i->m_Next, i);
+			i->m_Next = i->m_Next->m_Previous;
+			return true;
+		}
+	return false;
+}
+
+template <class T>
+bool CLIST::erase (const T & position)
+{
+	if (size () == 0)
+		return false;
+	for (std::shared_ptr <CNode>i = m_Head; i->m_Next != m_Tail; i = i->m_Next)
+		if (i->m_Next->m_Info == position)
+		{
+			i->m_Next->m_Next->m_Previous = i;
+			i->m_Next = i->m_Next->m_Next;
+			return true;
+		}
+	return false;
+}
+
+template <class T>
 void CLIST::unique()
 {
 	for (std::shared_ptr <CNode>i = m_Head->m_Next; i->m_Next != m_Tail && i != m_Tail; i = i->m_Next)
@@ -228,7 +258,29 @@ void CLIST::merge (CList& l)
 template <class T>
 void CLIST::sort()
 {
-
+	if (size () <= 1)
+		return;
+	CList <T> Temp, Buf;
+	Temp.push_front (front ());
+	pop_front ();
+	while (m_Head->m_Next != m_Tail)
+	{
+		if (Buf.empty ())
+		{
+			Buf.push_front (front());
+			pop_front ();
+		}
+		if (front() >= Buf.back ())
+		{
+			Buf.push_back (front ());
+			pop_front ();
+		}
+		else
+		{
+			Temp.merge (Buf);
+		}
+	}
+	merge (Temp);
 }
 
 template <class T>

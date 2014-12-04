@@ -49,11 +49,11 @@ namespace nsSdD
 		bool empty () const;		//returns true if the list is empty
 		size_t size () const;		//returns the number of elements of the list
 
-		CNode&	front ();				//reference to the first element
-		const CNode&	front () const;		//const reference to the first element
+		T&	front ();				//reference to the first element
+		const T&	front () const;		//const reference to the first element
 
-		CNode&	back ();				//reference to the last element
-		const CNode&	back() const;		//const reference to the last element
+		T&	back ();				//reference to the last element
+		const T&	back() const;		//const reference to the last element
 
 		void push_front (const T& val);		//inserts an element at the beginning of the list (after the head sentinel)
 		void push_back (const T& val);		//inserts an element at the end of the list (before the tail sentinel)
@@ -65,6 +65,8 @@ namespace nsSdD
 		void clear();	//sets list's size to 0
 
 		void remove (const T& val);	//removes list's elements of value val
+		bool insert (const T & position, const T & val);
+		bool erase (const T & position);
 		void unique();	//removes all but the first element of consecutive group of equal elements
 
 		void merge (CList& l); //transfers all of l's elements in the list, requieres ordered lists. l then becomes empty
