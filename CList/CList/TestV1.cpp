@@ -1,6 +1,9 @@
 #include <iostream>
+#include <stdlib.h>
+#include <time.h>
 #include "IziAssert.h"
 #include "CList.h"
+
 
 using namespace std;
 using namespace nsSdD;
@@ -8,77 +11,130 @@ using namespace nsSdD;
 namespace {
 	size_t size(10);
 	int value(14);
+	unsigned i;
 
-	void ConstructorTest() {
-		cout << "Creation of a first list, which size equals" << size << "and fullfilled with the same int (" << value << ")"
+	void ConstructorTest() {		
+		cout << "Creation d'une premiere liste remplie de " << value << " dont la taille vaut "<< size
 			 << endl;
 		CList<int>list(size, value);
-		cout << "Done"
+		cout << "Termine"
 			<<endl
-			<< "Creation of a second list using the copy constructor" 
+			<< "Creation d'une seconde liste en utilisant le constructeur par recopie" 
 			<< endl;
-		CList<int>list2 = list;
-		cout << "Done" 
+		CList<int>list2(list);
+		cout << "Termine"
+			<< endl
+			<< "Test de ces deux constructeurs et de l'operateur [] en cours..."
+			<< endl
+			<< endl
+			<< endl;
+
+		i = rand() % size;
+		IZI_ASSERT(list [i] == value);
+		IZI_ASSERT(list [i] == list2[i]);
+		
+
+		cout << "Test termine."
 			<<endl
-			<< "Testing in progress"
-		   	<< endl;
-
-		for (unsigned i (0); i < size; ++i){
-			IZI_ASSERT(list [i] == value);
-			IZI_ASSERT(list [i] == list2[i]);
-		}//for
-
-		cout << "Done"
-			<< "Creation of an empty list, size " << size
+			<< "Creation d'une liste vide de taille " << size
 			<< endl;
 		CList<int>list3(size);
-		cout << "Done"
+		cout << "Termine"
 			<< endl
-			<< "Assignating all values to " << value << "using assign() method"
+			<< "Assignation de toutes les valeurs a " << value << " en utilisant la methode assign()"
 			<< endl;
 		list3.assign(size, value);
-		cout << "Assignation réussie"
+		cout << "Assignation reussie"
 			<< endl
-			<<"Testing in progress"
-			<<endl;
-
-		for (unsigned i(0); i < size; ++i) IZI_ASSERT(list3[i] == value);
-
-		cout << "Done"
+			<<"Test de ce constructeur et de la methode en cours..."
+			<<endl
 			<< endl
-			<< "Creation of a new list using operator ="
+			<< endl;
+
+		i = rand() % size;
+		IZI_ASSERT(list3[i] == value);
+
+		cout << "Termine"
+			<< endl
+			<< "Creation d'une nouvelle liste en se servant de l'operateur ="
 			<< endl;
 		CList<int> list4 = list;
-		cout << "Done"
+		cout << "Termine"
 			<< endl
-			<< "Testing in progress"
+			<< "Test de l'operateur = en cours..."
+			<< endl
+			<< endl
 			<< endl;
 
-		for (unsigned i(0); i < size; ++i) IZI_ASSERT(list4[i] == list[i]);
+		i = rand() % size;
+		IZI_ASSERT(list4[i] == list[i]);
 
-			cout << "Done"
+			cout << "Termine"
 				<< endl;
 
 
-			cout << "Functionnalities tested :" << endl
-				<< "-Constructor of an empty list" << endl
-				<< "-Constructor of an empty list, size n" << endl
-				<< "-Constructor of a list filed with ints, size n" << endl
-				<< "-Recopy constructor" << endl
-				<< "- = Operator" << endl
-				<< "- [] Operator" << endl
-				<< "-assign() method" << endl;
+			cout << "Fonctionnalites testees :" << endl
+				<< "-Constructeur d'une liste vide" << endl
+				<< "-Constructeur d'une liste vide de taille n" << endl
+				<< "-Constructeur d'une liste remplie d'entiers de taille n" << endl
+				<< "-Constructeur par recopie" << endl
+				<< "-Operateur =" << endl
+				<< "-Operateur []" << endl
+				<< "-Methode assign()" << endl;
 				
+			char c;
+			cin >> c;
 	}//ConstructorTest()
 
+	void EmptyTest(){
+		cout << "Creation de trois listes, une vide, une remplie d'éléments vides et une remplie d'entiers."
+			<< endl;
+		CList<int>list1();
+		CList<int>list2(size);
+		CList<int>list3(size, value);
+		cout << "Creation terminee, debut des tests de empty()..."
+			<< endl
+			<< endl
+			<< endl;
+		IZI_ASSERT(list1.empty());
+		IZI_ASSERT(!list2.empty());
+		IZI_ASSERT(!list3.empty());
+		cout << "Termine"
+			<< endl;
+
+		cout << "Fonctionnalite testee :" << endl
+			<< "Methode assign()" << endl;
+
+		char c;
+		cin >> c;
+	}//EmptyTest()
 
 
+	void Size_tTest(){
+		cout << "Creation d'une liste de taille " << size << "."
+			<< endl;
+		CList<int>list(size);
+		cout << "Creation terminee, debut du test de la methode size()..."
+			<< endl
+			<< endl
+			<< endl;
+		IZI_ASSERT(list.size() == size);
+		cout << "Termine"
+			<< endl;
+		cout << "Fonctionalite testee :" << endl
+			<< "Methode size()" << endl;
+
+		char c;
+		cin >> c;
+	}//Size_tTest()
 
 	
 
 }//namespace
 
 int main(){
-	ConstructorTest();
+	//ConstructorTest();
+	//EmptyTest();
+	//Size_tTest();
 	return 0;
 }
