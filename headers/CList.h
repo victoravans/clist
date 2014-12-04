@@ -35,7 +35,7 @@ namespace nsSdD
 		explicit CList ();				//empty list
 		explicit CList (std::size_t n);				//list of n empty elements
 		CList (std::size_t n, const T& val);		//list of n elements of value val
-		CList (const CList& x);						//list copied of another list
+		CList(const CList& l);			//list copied of another list
 
 		CList& operator= (const CList& l);			//duplicates every element of list l to create another one
 		void assign (std::size_t n, const T& val);	//fills the list with n elements, each a copy of val
