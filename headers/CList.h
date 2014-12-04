@@ -20,8 +20,7 @@ namespace nsSdD
 			std::shared_ptr <CNode> m_Next;
 			std::shared_ptr <CNode> m_Previous;
 
-			CNode () {}
-			CNode(T info, std::shared_ptr <CNode> suivant = nullptr, std::shared_ptr <CNode> precedent = nullptr)
+			CNode(T info = T(), std::shared_ptr <CNode> suivant = nullptr, std::shared_ptr <CNode> precedent = nullptr)
 				:m_Info(info), m_Next(suivant), m_Previous(precedent){}
 			~CNode() {}
 

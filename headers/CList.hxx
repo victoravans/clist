@@ -4,9 +4,11 @@
 
 
 template <class T>
-CLIST::CList ()
-: m_Head (std::shared_ptr <CNode>  (new CNode(T(),m_Tail,nullptr))),
-  m_Tail (std::shared_ptr <CNode>  (new CNode(T(),nullptr,m_Head))){}
+CLIST::CList () :m_Head (make_shared<CNode> ()), m_Tail (make_shared<CNode> ())
+{
+	m_Head->m_Next = m_Tail;
+	m_Tail->m_Previous = m_Head;
+}
 
 
 template <class T>
