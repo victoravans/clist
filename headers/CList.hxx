@@ -89,31 +89,31 @@ size_t CLIST::size () const
 }
 
 template <class T>
-T& CLIST::front ()
+typename CLIST::CNode& CLIST::front ()
 {
-	return m_Head->m_Next->m_Info;
+	return *(m_Head->m_Next);
 }
 
 template <class T>
-const T& CLIST::front () const
+const typename CLIST::CNode& CLIST::front () const
 {
-	return m_Head->m_Next->m_Info;
+	return *(m_Head->m_Next);
 }
 
 template <class T>
-T& CLIST::back ()
+typename CLIST::CNode& CLIST::back ()
 {
-	return m_Tail->m_Previous->m_Info;
+	return *(m_Tail->m_Previous);
 }
 
 template <class T>
-const T& CLIST::back() const
+const typename CLIST::CNode& CLIST::back () const
 {
-	return m_Tail->m_Previous->m_Info;
+	return *(m_Tail->m_Previous);
 }
 
 template <class T>
-T&	CLIST::operator[] (std::size_t position) const
+typename CLIST::CNode&	CLIST::operator[] (std::size_t position) const
 {
 	size_t Size = size ();
 	if (position > size () - 1)
@@ -132,7 +132,7 @@ T&	CLIST::operator[] (std::size_t position) const
 	}
 	while (true)
 	{
-		if (i == position) return ptr->m_Info;
+		if (i == position) return *ptr;
 		if (position > Size)
 		{
 			ptr = ptr->m_Previous;
@@ -187,7 +187,7 @@ template <class T>
 void CLIST::resize (std::size_t n, T val /* = T() */)
 {
 	size_t Size = size();
-
+	push_back (val);
 	if (n > Size)
 		while (Size++ < n)
 			push_back (val);

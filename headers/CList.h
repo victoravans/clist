@@ -12,30 +12,38 @@ namespace nsSdD
 	template <class T>
 	class CList
 	{
-	public:
+	private:
 		class CNode
 		{
-		public:
-			T m_Info;
+			friend CList;
+		private:
 			std::shared_ptr <CNode> m_Next;
 			std::shared_ptr <CNode> m_Previous;
 
-			CNode(T info = T(), std::shared_ptr <CNode> suivant = nullptr, std::shared_ptr <CNode> precedent = nullptr)
-				:m_Info(info), m_Next(suivant), m_Previous(precedent){}
-			~CNode() {}
+		public:
+			T m_Info;
+
+			bool HasNext () const { return (m_Next->m_Next != nullptr); } 
+			bool HasPrevious () const { return (m_Previous->m_Previous != nullptr); }
+			CNode& GetNext (){ if (!HasNext ()) return *this; return *m_Next; }
+			CNode& GetPrevious () { if (!HasPrevious ()) return *this; return *m_Previous; }
+
+			operator T() { return m_Info; }
+			T& GetInfo () { return m_Info; }
+
+			CNode (const T & val = T(), std::shared_ptr <CNode> suivant = nullptr, std::shared_ptr <CNode> precedent = nullptr)
+				:m_Info (val), m_Next (suivant), m_Previous (precedent) {}
+			virtual ~CNode () {}
 		};
 
-	public:
 		std::shared_ptr <CNode> m_Head;	//head sentinel
 		std::shared_ptr <CNode> m_Tail;	//tail sentinel
 
-		CList split (CList l);
-
 	public:
 		explicit CList ();				//empty list
-		explicit CList (std::size_t n);				//list of n empty elements
+		explicit CList (std::size_t n );				//list of n empty elements
 		CList (std::size_t n, const T& val);		//list of n elements of value val
-		CList(const CList& l);			//list copied of another list
+		CList (const CList& l);			//list copied of another list
 
 		CList& operator= (const CList& l);			//duplicates every element of list l to create another one
 		void assign (std::size_t n, const T& val);	//fills the list with n elements, each a copy of val
@@ -43,13 +51,13 @@ namespace nsSdD
 		bool empty () const;		//returns true if the list is empty
 		size_t size () const;		//returns the number of elements of the list
 
-		T&	front ();				//reference to the first element
-		const T&	front () const;		//const reference to the first element
+		CNode&	front ();		//reference to the first element
+		const CNode&	front () const;		//const reference to the first element
 
-		T&	back ();				//reference to the last element
-		const T&	back() const;		//const reference to the last element
+		CNode&	back ();				//reference to the last element
+		const CNode&	back () const;	//const reference to the last element
 
-		T&	operator[] (std::size_t position) const;
+		CNode&	operator[] (std::size_t position) const;
 
 		void push_front (const T& val);		//inserts an element at the beginning of the list (after the head sentinel)
 		void push_back (const T& val);		//inserts an element at the end of the list (before the tail sentinel)
@@ -69,6 +77,8 @@ namespace nsSdD
 		void sort();	//sorts the list using operator<
 		void reverse();	//reverse the order of the elements in the list
 		void edit (bool jumpLines = false);
+
+		void test () { m_Head->m_Next = nullptr; }
 	};
 }
 
