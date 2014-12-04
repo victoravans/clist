@@ -11,9 +11,9 @@ using namespace nsSdD;
 namespace {
 	size_t size(10);
 	int value(14);
+	unsigned i;
 
-	void ConstructorTest() {
-		unsigned i;
+	void ConstructorTest() {		
 		cout << "Creation d'une premiere liste remplie de " << value << " dont la taille vaut "<< size
 			 << endl;
 		CList<int>list(size, value);
@@ -86,6 +86,27 @@ namespace {
 			cin >> c;
 	}//ConstructorTest()
 
+	void EmptyTest(){
+		cout << "Creation de trois listes, une vide, une remplie d'éléments vides et une remplie d'entiers."
+			<< endl;
+		CList<int>list1();
+		CList<int>list2(size);
+		CList<int>list3(size, value);
+		cout << "Creation terminee, debut des tests de empty()..."
+			<< endl
+			<< endl
+			<< endl;
+		IZI_ASSERT(list1.empty());
+		IZI_ASSERT(!list2.empty());
+		IZI_ASSERT(!list3.empty());
+
+		cout << "Fonctionnalite testee :" << endl
+			<< "Methode assign()" << endl;
+
+		char c;
+		cin >> c;
+	}//EmptyTest()
+
 
 
 
@@ -94,6 +115,7 @@ namespace {
 }//namespace
 
 int main(){
-	ConstructorTest();
+	//ConstructorTest();
+	EmptyTest();
 	return 0;
 }
