@@ -11,6 +11,7 @@ using namespace nsSdD;
 namespace {
 	size_t size(10);
 	int value(14);
+	int value1(8);
 	unsigned i;
 
 	void ConstructorTest() {		
@@ -89,7 +90,7 @@ namespace {
 	void EmptyTest(){
 		cout << "Creation de trois listes, une vide, une remplie d'éléments vides et une remplie d'entiers."
 			<< endl;
-		CList<int>list1();
+		CList<int>list1;
 		CList<int>list2(size);
 		CList<int>list3(size, value);
 		cout << "Creation terminee, debut des tests de empty()..."
@@ -128,6 +129,102 @@ namespace {
 		cin >> c;
 	}//Size_tTest()
 
+	void FrontBackTest(){
+		cout << "Creation d'une liste de taille " << size << " remplie de " << value
+			<< endl;
+		CList<int>list(size, value);
+		cout << "Creation terminee, debut des tests de back() et front()"
+			<< endl
+			<< endl
+			<< endl;
+		IZI_ASSERT(list.front() == list[0]);
+		IZI_ASSERT(list.back() == list[size - 1]);
+		cout << "Termine"
+			<< endl;
+		cout << "Fontionalites testees :" << endl
+			<< "Methode front()" << endl
+			<< "Methode back()" << endl;
+
+		char c;
+		cin >> c;
+	}//FrontBackTest()
+
+	void PushPopFrontBackTest(){
+		CList<int>list(size, value);
+		list.push_front(value1);
+		IZI_ASSERT(list[0] == value1 && list[1] == value);
+		list.pop_front();
+		IZI_ASSERT(list[0] == value);
+		list.push_back(value1);
+		IZI_ASSERT(list[size] == value1 && list[size-1] == value);
+		list.pop_back();
+		IZI_ASSERT(list[size] == value);
+	}//PushPopFrontBackTest
+
+	void SwapTest(){
+		CList<int>list;
+		CList<int>list1(size, value);
+		CList<int>list2 = list1;
+		list.swap(list1);
+		i = rand() % size;
+		IZI_ASSERT(list[i] == list2[i]);
+	}//SwapTest()
+
+	void ResizeTest(){
+		CList<int>list(size);
+		list.resize(size + 2);
+		IZI_ASSERT(list.size() == size + 2);
+		list.resize(size);
+		IZI_ASSERT(list.size() == size);
+	}//ResizeTest()
+
+	void ClearTest(){
+		CList<int>list(size);
+		list.clear();
+		IZI_ASSERT(list.size() == 0);
+	}//ClearTest()
+
+	void RemoveTest(){
+		CList<int>list(size, value);
+		list.remove(value);
+		IZI_ASSERT(list.size() == 0);
+		CList<int>list1(size, value);
+		list1.push_back(value1);
+		list1.push_back(value1 - 5);
+		list1.push_front(value1);
+		list1.edit();
+		list1.remove(value);
+		list1.edit();
+	}//RemoveTest()
+
+	void InsertTest(){
+		CList<int>list(size, value);
+		list.edit();
+		list.insert(size - 3, value1);
+		list.edit();
+		IZI_ASSERT(list[size - 3] == value1);
+	}//InsertTest()
+
+	void EraseTest(){
+		CList<int>list(size);
+		for (unsigned n(0); n < size; ++n) { list.insert(n, n); }
+		list.edit();
+		list.erase(size - 3);
+		IZI_ASSERT(list[size - 3] == size - 2);
+	}//EraseTest()
+
+	void UniqueTest(){
+		CList<int>list(size*2);
+		for (unsigned n(0); n < size*2; ++n) { list.insert(n, n/2); }
+		list.edit();
+		list.unique();
+		list.edit();
+		i = rand() % size*2 + 2;
+		IZI_ASSERT(list[i - 1] != list[i - 2] && list[i - 1] != list[i]);
+	}//UniqueTest()
+
+
+
 	
 
 }//namespace
@@ -136,5 +233,6 @@ int main(){
 	//ConstructorTest();
 	//EmptyTest();
 	//Size_tTest();
+	//FrontBackTest()
 	return 0;
 }
