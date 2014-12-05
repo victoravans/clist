@@ -1,3 +1,13 @@
+/**
+* \CList.hxx
+* \brief Implémentation CList
+* \author Mathieu Mérino
+* \date 30/11/14
+*
+* Définition des fonctions de CList, une classe générique
+*
+*/
+
 #pragma once
 
 #define CLIST nsSdD::CList<T>
