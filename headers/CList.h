@@ -1,6 +1,15 @@
 #ifndef __CLIST_H__
 #define __CLIST_H__
 
+/**
+* \CList.h
+* \brief Déclaration CList
+* \author Mathieu Mérino
+* \date 30/11/14
+*
+* Déclaration de la classe CList
+*
+*/
 
 #include <cstddef>		//size_t
 #include <memory>		//shared_ptr
@@ -40,8 +49,19 @@ namespace nsSdD
 		std::shared_ptr <CNode> m_Tail;	//tail sentinel
 
 	public:
-		explicit CList ();				//empty list
-		explicit CList (std::size_t n );				//list of n empty elements
+		/**
+		* \fn explicit CList ();
+		* \brief Constructeur par défaut de CList
+		*
+		*/
+		explicit CList ();
+		/**
+		* \fn explicit CList (std::size_t n);
+		* \brief Constructeur de CList créant une liste de taille n (type_valeur construit par défaut)
+		*
+		* \param n Taille de la liste
+		*/
+		explicit CList (std::size_t n);				//list of n empty elements
 		CList (std::size_t n, const T& val);		//list of n elements of value val
 		CList (const CList& l);			//list copied of another list
 
