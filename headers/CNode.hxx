@@ -48,7 +48,7 @@ const typename CNODE& CNODE::GetPrevious () const
 }
 
 template <class T>
-typename CNODE::operator T() const
+CNODE::operator T() const
 {
 	return m_Info;
 }

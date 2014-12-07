@@ -84,7 +84,7 @@ typename ITER& ITER::operator--(int)
 	return *Temp;
 }
 template <class T>
-void ITER::Verif ()
+void ITER::Verif () const
 {
 	if (m_Previous == nullptr) cout << "null ";
 	else cout << m_Previous->m_Info << " ";

@@ -75,8 +75,7 @@ namespace nsSdD
 			*
 			* 
 			*/
-			CNode (const T & val = T (), std::shared_ptr <CNode> suivant = nullptr, std::shared_ptr <CNode> precedent = nullptr)
-				:m_Info (val), m_Next (suivant), m_Previous (precedent){}
+			CNode (const T & val = T (), std::shared_ptr <CNode> suivant = nullptr, std::shared_ptr <CNode> precedent = nullptr);
 			/**
 			* \brief Vérifie si l'élément est le dernier de la liste
 			*
@@ -143,7 +142,7 @@ namespace nsSdD
 			*
 			* \return
 			*/
-			operator T();
+			operator T() const;
 		};
 		std::shared_ptr <CNode> m_Head;	/*!< Pointeur vers la sentinelle de tête*/
 		std::shared_ptr <CNode> m_Tail;	/*!< Pointeur vers la sentinelle de queue*/
@@ -167,6 +166,7 @@ namespace nsSdD
 			iterator& operator++(int);
 			iterator& operator--();
 			iterator& operator--(int);
+			void Verif () const;
 		};
 		/**
 		* \brief Constructeur par défaut de CList
