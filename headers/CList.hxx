@@ -58,11 +58,37 @@ CLIST& CLIST::operator= (const CList& l)
 	if (lSize != size())
 		resize (lSize);
 
-	std::shared_ptr <CNode> i = m_Head;
-	std::shared_ptr <CNode> j = l.m_Head;
+	iterator i = m_Head;
+	iterator j = l.m_Head;
+	//std::shared_ptr <CNode> i = m_Head;
+	//std::shared_ptr <CNode> j = l.m_Head;
 	for (;i != m_Tail; i = i->m_Next, j=j->m_Next)
 		i->m_Info = j->m_Info;
 	return *this;
+}
+
+template <class T>
+typename CLIST::iterator CLIST::begin ()
+{
+	return iterator (m_Head->m_Next, m_Head->m_Next->m_Next, nullptr);
+}
+
+template <class T>
+const typename CLIST::iterator CLIST::begin () const
+{
+	return iterator (m_Head->m_Next, m_Head->m_Next->m_Next, nullptr);
+}
+
+template <class T>
+typename CLIST::iterator CLIST::end ()
+{
+	return iterator (m_Tail->m_Previous, nullptr, m_Tail->m_Previous->m_Previous);
+}
+
+template <class T>
+const typename CLIST::iterator CLIST::end () const
+{
+	return iterator (m_Tail->m_Previous, nullptr, m_Tail->m_Previous->m_Previous);
 }
 
 template <class T>
@@ -99,27 +125,27 @@ size_t CLIST::size () const
 }
 
 template <class T>
-typename CLIST::CNode& CLIST::front ()
+typename CLIST::iterator CLIST::front ()
 {
-	return *(m_Head->m_Next);
+	return *(m_Head->m_Next->)
 }
 
 template <class T>
-const typename CLIST::CNode& CLIST::front () const
+const typename CLIST::iterator CLIST::front () const
 {
-	return *(m_Head->m_Next);
+	return iterator (m_Head->m_Next, m_Head->m_Next->m_Next, nullptr);
 }
 
 template <class T>
-typename CLIST::CNode& CLIST::back ()
+typename CLIST::iterator CLIST::back ()
 {
-	return *(m_Tail->m_Previous);
+	return iterator (m_Tail->m_Previous, nullptr, m_Tail->m_Previous->m_Previous);
 }
 
 template <class T>
-const typename CLIST::CNode& CLIST::back () const
+const typename CLIST::iterator CLIST::back () const
 {
-	return *(m_Tail->m_Previous);
+	return iterator (m_Tail->m_Previous, nullptr, m_Tail->m_Previous->m_Previous);
 }
 
 template <class T>

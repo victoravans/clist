@@ -1,8 +1,6 @@
 ﻿#ifndef __CLIST_H__
 #define __CLIST_H__
 
-// BRANCHE 2
-int a ;
 /**
 * \CList.h
 * \brief Déclaration CList
@@ -16,6 +14,7 @@ int a ;
 #include <cstddef>		//size_t
 #include <memory>		//shared_ptr
 #include <ostream>		//ostream
+#include <utility>		//comparators
 
 /*! \namespace nsSdD
  *
@@ -67,12 +66,10 @@ namespace nsSdD
 		*/
 		class CNode
 		{
-			friend CList;
-		private:
+		public:
 			std::shared_ptr <CNode> m_Next; /*!< Pointeur vers l'élément suivant de la liste*/
 			std::shared_ptr <CNode> m_Previous; /*!< Pointeur vers l'élément précédent de la liste*/
 			T m_Info; /*!< Information contenue dans le CNode*/
-		public:
 			/**
 			* \brief Constructeur de CNode
 			*
@@ -148,11 +145,29 @@ namespace nsSdD
 			*/
 			operator T() const { return m_Info; }
 		};
-
 		std::shared_ptr <CNode> m_Head;	/*!< Pointeur vers la sentinelle de tête*/
 		std::shared_ptr <CNode> m_Tail;	/*!< Pointeur vers la sentinelle de queue*/
 
 	public:
+		class iterator
+		{
+		private:
+			std::shared_ptr <CNode> m_Elmt;
+			std::shared_ptr <CNode> m_Next;
+			std::shared_ptr <CNode> m_Previous;
+		public:
+			iterator (std::shared_ptr <CNode> Elmt = nullptr, std::shared_ptr <CNode> Next = nullptr, std::shared_ptr <CNode> Previous = nullptr)
+				:m_Elmt (Elmt), m_Next (Elmt), m_Previous (Previous) {}
+			iterator (const iterator & i) : m_Elmt (i.m_Elmt), m_Next (i.m_Next), m_Previous (i.m_Previous) {}
+				iterator& operator= (const iterator & i) { m_Elmt (i.m_Elmt); m_Next (i.m_Next); m_Previous (i.m_Previous); }
+			bool operator== (const iterator & i) const { return (m_Elmt == i.m_Elmt && m_Next == i.m_Next && m_Previous == i.m_Previous); }
+			T& operator* () {return (m_Elmt->m_Info); }
+			T* operator-> () {return *(m_Elmt->m_Info); }
+			iterator& operator++() { m_Previous = m_Elmt; m_Elmt = m_Next; m_Next = m_Next->m_Next; return this; }
+			iterator& operator++(int) { iterator Temp (this); m_Previous = m_Elmt; m_Elmt = m_Next; m_Next = m_Next->m_Next; return Temp; }
+			iterator& operator--() { m_Next = m_Elmt; m_Elmt = m_Previous; m_Previous = m_Previous->m_Previous; return this; }
+			iterator& operator--(int) { iterator Temp (this); m_Next = m_Elmt; m_Elmt = m_Previous; m_Previous = m_Previous->m_Previous; return Temp; }
+		};
 		/**
 		* \brief Constructeur par défaut de CList
 		*
@@ -194,7 +209,11 @@ namespace nsSdD
 		* \param l Liste à copier
 		* \return La liste modifiée
 		*/
-		CList& operator= (const CList& l);			//duplicates every element of list l to create another one
+		CList& operator= (const CList& l);
+		iterator begin ();
+		const iterator begin () const;
+		iterator end ();
+		const iterator end () const;
 		/**
 		* \brief Redimensionne la liste et remplace son contenu par une valeur
 		*
@@ -222,8 +241,8 @@ namespace nsSdD
 		*
 		* \return La taille de la liste
 		*/
-		size_t size () const;		//returns the number of elements of the list
-		/**
+		size_t size () const;
+		/** VERIFIER
 		* \brief Renvoie le premier élément
 		*
 		* Renvoie la référence du CNode du premier élément de la liste. Sur une liste vide, cette fonction peut avoir
@@ -231,8 +250,8 @@ namespace nsSdD
 		*
 		* \return La référence vers le premier élément de la liste
 		*/
-		CNode& front ();		//reference to the first element
-		/**
+		iterator front ();		//reference to the first element
+		/** VERIFIER
 		* \brief Renvoie le premier élément
 		*
 		* Cette fonction est appelée à la place de l'autre front () si la liste est constante.
@@ -242,8 +261,8 @@ namespace nsSdD
 		*
 		* \return La référence constante vers le premier élément de la liste
 		*/
-		const CNode& front () const;		//const reference to the first element
-		/**
+		const iterator front () const;		//const reference to the first element
+		/** VERIFIER
 		* \brief Renvoie le dernier élément
 		*
 		* Renvoie la référence du CNode du dernier élément de la liste. Sur une liste vide, cette fonction peut avoir
@@ -251,8 +270,8 @@ namespace nsSdD
 		*
 		* \return La référence vers le dernier élément de la liste
 		*/
-		CNode& back ();				//reference to the last element
-		/**
+		iterator back ();				//reference to the last element
+		/** VERIFIER
 		* \brief Renvoie le dernier élément
 		*
 		* Cette fonction est appelée à la place de l'autre back () si la liste est constante.
@@ -262,7 +281,7 @@ namespace nsSdD
 		*
 		* \return La référence constante vers le dernier élément de la liste
 		*/
-		const CNode& back () const;	//const reference to the last element
+		const iterator back () const;	//const reference to the last element
 		/**
 		* \brief Renvoie l'élément situé à l'index voulu
 		*

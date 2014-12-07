@@ -7,12 +7,12 @@ using namespace std;
 
 int main ()
 {
-	CList <int> a (5, 10);
-	const CList <int> b (5, 11);
-	a.reverse ();
+	CList <int> a (2, 10);
+	int i = *(a.front ());
+	cout << i;
 
 
 
-	char cChar;
-	cin >> cChar;
+	char Char;
+	cin >> Char;
 }
