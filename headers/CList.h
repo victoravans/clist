@@ -1,6 +1,8 @@
 ﻿#ifndef __CLIST_H__
 #define __CLIST_H__
 
+// BRANCHE 2
+
 /**
 * \CList.h
 * \brief Déclaration CList
