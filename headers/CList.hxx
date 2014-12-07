@@ -51,7 +51,8 @@ CLIST& CLIST::operator= (const CList& l)
 {
 	resize (l.size ());
 	iterator j = l.begin ();
-	for (iterator i = begin (); i != end (); ++i, ++j) *i = *j;
+	for (iterator i = begin (); i != end (); ++i, ++j) 
+		*i = *j;
 	return *this;
 }
 
@@ -86,13 +87,13 @@ void CLIST::assign (std::size_t n, const T& val)
 	if (n < Size)
 	{
 		resize (n);
-		for (std::shared_ptr<CNode> i = m_Head->m_Next; i != m_Tail; i = i->m_Next)
-			i->m_Info = val;
+		for (iterator i = begin(); i != end(); ++i)
+			*i = val;
 	}
 	else
 	{
-		for (std::shared_ptr<CNode> i = m_Head->m_Next; i != m_Tail; i = i->m_Next)
-			i->m_Info = val;
+		for (iterator i = begin (); i != end (); ++i)
+			*i = val;
 		if (n != Size) resize (n, val);
 	}
 }
@@ -107,7 +108,7 @@ template <class T>
 size_t CLIST::size () const
 {
 	size_t count = 0;
-	for (std::shared_ptr <CNode> i (m_Head->m_Next); i != m_Tail; i = i->m_Next)
+	for (iterator i = begin(); i != m_Tail;++i)
 		++count;
 	return count;
 }
@@ -136,73 +137,6 @@ const typename CLIST::iterator CLIST::back () const
 	return iterator (m_Tail->m_Previous, nullptr, m_Tail->m_Previous->m_Previous);
 }
 
-template <class T>
-typename CLIST::CNode&	CLIST::operator[] (std::size_t position)
-{
-	size_t Size = size ();
-	if (position > size () - 1)
-		throw std::out_of_range ("Trying to access an element out of the CList's range!");
-	std::shared_ptr <CNode> ptr;
-	std::size_t i;
-	if (position > Size)
-	{
-		ptr = m_Tail->m_Previous;
-		i = Size - 1;
-	}
-	else
-	{
-		ptr = m_Head->m_Next;
-		i = 0;
-	}
-	while (true)
-	{
-		if (i == position) return *ptr;
-		if (position > Size)
-		{
-			ptr = ptr->m_Previous;
-			--i;
-		}
-		else
-		{
-			ptr = ptr->m_Next;
-			++i;
-		}
-	}
-}
-
-template <class T>
-const typename CLIST::CNode& CLIST::operator[] (std::size_t position) const
-{
-	size_t Size = size ();
-	if (position > size () - 1)
-		throw std::out_of_range ("Trying to access an element out of the CList's range!");
-	std::shared_ptr <CNode> ptr;
-	std::size_t i;
-	if (position > Size)
-	{
-		ptr = m_Tail->m_Previous;
-		i = Size - 1;
-	}
-	else
-	{
-		ptr = m_Head->m_Next;
-		i = 0;
-	}
-	while (true)
-	{
-		if (i == position) return *ptr;
-		if (position > Size)
-		{
-			ptr = ptr->m_Previous;
-			--i;
-		}
-		else
-		{
-			ptr = ptr->m_Next;
-			++i;
-		}
-	}
-}
 template <class T>
 void CLIST::push_front (const T& val)
 {

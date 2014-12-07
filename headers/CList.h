@@ -283,28 +283,6 @@ namespace nsSdD
 		*/
 		const iterator back () const;	//const reference to the last element
 		/**
-		* \brief Renvoie l'élément situé à l'index voulu
-		*
-		* Renvoie la référence du CNode correspondant au numéro voulu, sachant que le premier élément vaut 0 et que leur
-		* numéro augmente de 1 par case. throw une exception de type out_of_range si la case demandé est hors de la liste.
-		*
-		* \param position Le numéro d'index de l'élément à renvoyer
-		* \return La référence vers l'élément de la liste demandé
-		*/
-		CNode& operator[] (std::size_t position);
-		/**
-		* \brief Renvoie l'élément situé à l'index voulu
-		*
-		* Cette fonction est appelée à la place de l'autre operator[] si la liste est constante.
-		*
-		* Renvoie la référence constante du CNode correspondant au numéro voulu, sachant que le premier élément vaut 0 et que leur
-		* numéro augmente de 1 par case. throw une exception de type out_of_range si la case demandé est hors de la liste.
-		*
-		* \param position Le numéro d'index de l'élément à renvoyer
-		* \return La référence constante vers l'élément de la liste demandé
-		*/
-		const CNode& operator[]  (std::size_t position) const;
-		/**
 		* \brief Rajoute un élément au début
 		*
 		* Une case est insérée à la suite de la sentinelle de tête, contenant comme information une copie de val.
