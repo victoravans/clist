@@ -91,6 +91,7 @@ namespace {
 		cout << "Creation de trois listes, une vide, une remplie d'éléments vides et une remplie d'entiers."
 			<< endl;
 		CList<int>list1;
+		const CList<int>clist1;
 		CList<int>list2(size);
 		CList<int>list3(size, value);
 		cout << "Creation terminee, debut des tests de empty()..."
@@ -98,6 +99,7 @@ namespace {
 			<< endl
 			<< endl;
 		IZI_ASSERT(list1.empty());
+		IZI_ASSERT(clist1.empty());
 		IZI_ASSERT(!list2.empty());
 		IZI_ASSERT(!list3.empty());
 		cout << "Termine"
@@ -115,11 +117,13 @@ namespace {
 		cout << "Creation d'une liste de taille " << size << "."
 			<< endl;
 		CList<int>list(size);
+		const CList<int>clist = list;
 		cout << "Creation terminee, debut du test de la methode size()..."
 			<< endl
 			<< endl
 			<< endl;
 		IZI_ASSERT(list.size() == size);
+		IZI_ASSERT(clist.size() == size);
 		cout << "Termine"
 			<< endl;
 		cout << "Fonctionalite testee :" << endl
@@ -133,12 +137,15 @@ namespace {
 		cout << "Creation d'une liste de taille " << size << " remplie de " << value
 			<< endl;
 		CList<int>list(size, value);
+		const CList<int>clist=list;
 		cout << "Creation terminee, debut des tests de back() et front()"
 			<< endl
 			<< endl
 			<< endl;
 		IZI_ASSERT(list.front() == list[0]);
 		IZI_ASSERT(list.back() == list[size - 1]);
+		IZI_ASSERT(clist.front() == list[0]);
+		IZI_ASSERT(clist.back() == list[size - 1]);
 		cout << "Termine"
 			<< endl;
 		cout << "Fontionalites testees :" << endl
