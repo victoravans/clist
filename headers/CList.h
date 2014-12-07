@@ -156,18 +156,17 @@ namespace nsSdD
 			std::shared_ptr <CNode> m_Next;
 			std::shared_ptr <CNode> m_Previous;
 		public:
-			iterator (std::shared_ptr <CNode> Elmt = nullptr, std::shared_ptr <CNode> Next = nullptr, std::shared_ptr <CNode> Previous = nullptr);
-			iterator (const iterator & i);
-			iterator& operator= (const iterator & i);
-			bool operator== (const iterator & i) const;
-			bool operator!= (const iterator & i) const;
-			T& operator* ();
-			T* operator-> ();
-			iterator& operator++();
-			iterator& operator++(int);
-			iterator& operator--();
-			iterator& operator--(int);
-			void Verif ();
+			iterator (std::shared_ptr <CNode> Elmt = nullptr, std::shared_ptr <CNode> Next = nullptr, std::shared_ptr <CNode> Previous = nullptr)
+				:m_Elmt (Elmt), m_Next (Elmt), m_Previous (Previous) {}
+			iterator (const iterator & i) : m_Elmt (i.m_Elmt), m_Next (i.m_Next), m_Previous (i.m_Previous) {}
+				iterator& operator= (const iterator & i) { m_Elmt (i.m_Elmt); m_Next (i.m_Next); m_Previous (i.m_Previous); }
+			bool operator== (const iterator & i) const { return (m_Elmt == i.m_Elmt && m_Next == i.m_Next && m_Previous == i.m_Previous); }
+			T& operator* () {return (m_Elmt->m_Info); }
+			T* operator-> () {return *(m_Elmt->m_Info); }
+			iterator& operator++() { m_Previous = m_Elmt; m_Elmt = m_Next; m_Next = m_Next->m_Next; return this; }
+			iterator& operator++(int) { iterator Temp (this); m_Previous = m_Elmt; m_Elmt = m_Next; m_Next = m_Next->m_Next; return Temp; }
+			iterator& operator--() { m_Next = m_Elmt; m_Elmt = m_Previous; m_Previous = m_Previous->m_Previous; return this; }
+			iterator& operator--(int) { iterator Temp (this); m_Next = m_Elmt; m_Elmt = m_Previous; m_Previous = m_Previous->m_Previous; return Temp; }
 		};
 		/**
 		* \brief Constructeur par défaut de CList
@@ -243,10 +242,46 @@ namespace nsSdD
 		* \return La taille de la liste
 		*/
 		size_t size () const;
-		T& front ();
-		const T& front () const;
-		T& back ();
-		const T& back () const;
+		/** VERIFIER
+		* \brief Renvoie le premier élément
+		*
+		* Renvoie la référence du CNode du premier élément de la liste. Sur une liste vide, cette fonction peut avoir
+		* un comportement indéfini sur le déroulement du programme car elle renvoie la sentinelle de queue.
+		*
+		* \return La référence vers le premier élément de la liste
+		*/
+		iterator front ();		//reference to the first element
+		/** VERIFIER
+		* \brief Renvoie le premier élément
+		*
+		* Cette fonction est appelée à la place de l'autre front () si la liste est constante.
+		*
+		* Renvoie la référence constante du CNode du premier élément de la liste. Sur une liste vide, cette fonction peut avoir
+		* un comportement indéfini sur le déroulement du programme car elle renvoie la sentinelle de queue.
+		*
+		* \return La référence constante vers le premier élément de la liste
+		*/
+		const iterator front () const;		//const reference to the first element
+		/** VERIFIER
+		* \brief Renvoie le dernier élément
+		*
+		* Renvoie la référence du CNode du dernier élément de la liste. Sur une liste vide, cette fonction peut avoir
+		* un comportement indéfini sur le déroulement du programme car elle renvoie la sentinelle de tête.
+		*
+		* \return La référence vers le dernier élément de la liste
+		*/
+		iterator back ();				//reference to the last element
+		/** VERIFIER
+		* \brief Renvoie le dernier élément
+		*
+		* Cette fonction est appelée à la place de l'autre back () si la liste est constante.
+		*
+		* Renvoie la référence constante du CNode du dernier élément de la liste. Sur une liste vide, cette fonction peut avoir
+		* un comportement indéfini sur le déroulement du programme car elle renvoie la sentinelle de tête.
+		*
+		* \return La référence constante vers le dernier élément de la liste
+		*/
+		const iterator back () const;	//const reference to the last element
 		/**
 		* \brief Renvoie l'élément situé à l'index voulu
 		*
@@ -392,7 +427,5 @@ namespace nsSdD
 }
 
 #include "CList.hxx"
-#include "CNode.hxx"
-#include "iterator.hxx"
 
 #endif /* __CLIST_H__ */

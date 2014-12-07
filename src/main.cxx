@@ -7,11 +7,12 @@ using namespace std;
 
 int main ()
 {
-	CList <int> a;
-	for (unsigned i = 1; i < 10; ++i)
-		a.push_back (i);
-	CList<int>::iterator b;
-	auto c (b);
+	CList <int> a (2, 10);
+	int i = *(a.front ());
+	cout << i;
+
+
+
 	char Char;
 	cin >> Char;
 }
