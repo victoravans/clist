@@ -352,14 +352,17 @@ void CLIST::sort()
 	CList <T> Temp, Buf;
 	while (m_Head->m_Next != m_Tail)
 	{
+		//Insérer le premier élément dans le buffer vide
 		Buf.push_front (front());
 		pop_front ();
+		//Remplir le buffer d'éléments croissants
 		while (! (front () < Buf.back ()) )
 		{
 			Buf.push_back (front ());
 			pop_front ();
 		}
-			Temp.merge (Buf);
+		//Vider le buffer dans Temp en triant
+		Temp.merge (Buf);
 	}
 	merge (Temp);
 }
