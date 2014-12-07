@@ -54,9 +54,7 @@ CLIST::CList (const CList& l):m_Head (make_shared<CNode> ()), m_Tail (make_share
 template <class T>
 CLIST& CLIST::operator= (const CList& l)
 {
-	size_t lSize = l.size();
-	if (lSize != size())
-		resize (lSize);
+	resize (l.size ());
 
 	std::shared_ptr <CNode> i = m_Head;
 	std::shared_ptr <CNode> j = l.m_Head;
