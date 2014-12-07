@@ -156,25 +156,18 @@ namespace nsSdD
 			std::shared_ptr <CNode> m_Next;
 			std::shared_ptr <CNode> m_Previous;
 		public:
-			void cunt ();
-			iterator (std::shared_ptr <CNode> Elmt = nullptr, std::shared_ptr <CNode> Next = nullptr, std::shared_ptr <CNode> Previous = nullptr)
-				:m_Elmt (Elmt), m_Next (Next), m_Previous (Previous) {}
-			iterator (const iterator & i) : m_Elmt (i.m_Elmt), m_Next (i.m_Next), m_Previous (i.m_Previous) {}
-				iterator& operator= (const iterator & i) { m_Elmt (i.m_Elmt); m_Next (i.m_Next); m_Previous (i.m_Previous); }
-			bool operator== (const iterator & i) const { return (m_Elmt == i.m_Elmt && m_Next == i.m_Next && m_Previous == i.m_Previous); }
-			bool operator!= (const iterator & i) const { return !operator==(i); }
-			T& operator* () {return (m_Elmt->m_Info); }
-			T* operator-> () {return *(m_Elmt->m_Info); }
-			iterator& operator++() { m_Previous = m_Elmt; m_Elmt = m_Next; m_Next = m_Next->m_Next; return *this; }
-			iterator& operator++(int) { iterator Temp (this); m_Previous = m_Elmt; m_Elmt = m_Next; m_Next = m_Next->m_Next; return *Temp; }
-			iterator& operator--() { m_Next = m_Elmt; m_Elmt = m_Previous; m_Previous = m_Previous->m_Previous; return *this; }
-			iterator& operator--(int) { iterator Temp (this); m_Next = m_Elmt; m_Elmt = m_Previous; m_Previous = m_Previous->m_Previous; return *Temp; }
-			void Verif ()
-			{
-				if (m_Previous == nullptr) cout << "null ";
-				else cout << m_Previous->m_Info << " ";
-				cout << m_Elmt->m_Info << " " << m_Next->m_Info << " " << endl;
-			}
+			iterator (std::shared_ptr <CNode> Elmt = nullptr, std::shared_ptr <CNode> Next = nullptr, std::shared_ptr <CNode> Previous = nullptr);
+			iterator (const iterator & i);
+			iterator& operator= (const iterator & i);
+			bool operator== (const iterator & i) const;
+			bool operator!= (const iterator & i) const;
+			T& operator* ();
+			T* operator-> ();
+			iterator& operator++();
+			iterator& operator++(int);
+			iterator& operator--();
+			iterator& operator--(int);
+			void Verif ();
 		};
 		/**
 		* \brief Constructeur par défaut de CList
@@ -399,5 +392,7 @@ namespace nsSdD
 }
 
 #include "CList.hxx"
+#include "CNode.hxx"
+#include "iterator.hxx"
 
 #endif /* __CLIST_H__ */
