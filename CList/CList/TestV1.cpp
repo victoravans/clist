@@ -223,6 +223,46 @@ namespace {
 		IZI_ASSERT(list[i - 1] != list[i - 2] && list[i - 1] != list[i]);
 	}//UniqueTest()
 
+	void SortTest(){
+		CList<int>list;
+		for (unsigned n = 0; n < 10; ++n)
+			list.push_back(rand() % 10);
+		list.edit();
+		list.sort();
+		list.edit();
+		i = rand() % 9;
+			IZI_ASSERT(list[i] >= list[i + 1]);
+	}//SortTest()
+
+	void MergeTest(){
+		CList<int>list1; 
+		CList<int>list2;
+		for (unsigned n = 0; n < 10; ++n) {
+			list1.push_back(rand() % 10);
+			list2.push_back(rand() % 10);
+		}//for()
+		list1.sort();
+		list2.sort();
+		list1.edit();
+		list2.edit();
+		list1.merge(list2);
+		list1.edit();
+		i = rand() % 19;
+		IZI_ASSERT(list1[i] >= list1[i + 1]);
+	}//MergeTest()
+
+	void ReverseTest(){
+		CList<int>list;
+		CList<int>wlist;
+		for (unsigned n = 0; n < 10; ++n)
+			list.push_back(rand() % 10);
+		wlist = list;
+		list.edit();
+		list.reverse();
+		list.edit();
+		i = rand() % 10;
+		IZI_ASSERT(list[i] == wlist[9 - i]);
+	}//ReverseTest()
 
 
 	
