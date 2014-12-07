@@ -127,7 +127,7 @@ size_t CLIST::size () const
 template <class T>
 typename CLIST::iterator CLIST::front ()
 {
-	return *(m_Head->m_Next->)
+	return iterator (m_Head->m_Next, m_Head->m_Next->m_Next, nullptr);
 }
 
 template <class T>

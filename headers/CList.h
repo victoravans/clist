@@ -85,7 +85,7 @@ namespace nsSdD
 			*
 			* \return true si le CNode n'est pas le dernier de la liste, false sinon
 			*/
-			bool HasNext () const { return (m_Next->m_Next != nullptr); } 
+			bool HasNext () const;
 			/**
 			* \brief Vérifie si l'élément est le premier de la liste
 			*
@@ -94,7 +94,7 @@ namespace nsSdD
 			*
 			* \return true si le CNode n'est pas le premier de la liste, false sinon
 			*/
-			bool HasPrevious () const { return (m_Previous->m_Previous != nullptr); }
+			bool HasPrevious () const;
 			/**
 			* \brief Récupère l'élément suivant de la liste
 			*
@@ -103,7 +103,7 @@ namespace nsSdD
 			*
 			* \return Référence vers le prochain élément de la liste
 			*/
-			CNode& GetNext (){ if (!HasNext ()) return *this; return *m_Next; }
+			CNode& GetNext ();
 			/**
 			* \brief Récupère l'élément suivant de la liste
 			*
@@ -114,7 +114,7 @@ namespace nsSdD
 			*
 			* \return Référence constante vers le prochain élément de la liste
 			*/
-			const CNode& GetNext () const { if (!HasNext ()) return *this; return *m_Next; }
+			const CNode& GetNext () const;
 			/**
 			* \brief Récupère l'élément précédent de la liste
 			*
@@ -123,7 +123,7 @@ namespace nsSdD
 			*
 			* \return Référence vers l'élément précédent de la liste
 			*/
-			CNode& GetPrevious () { if (!HasPrevious ()) return *this; return *m_Previous; }
+			CNode& GetPrevious ();
 			/**
 			* \brief Récupère l'élément précédent de la liste
 			*
@@ -134,7 +134,7 @@ namespace nsSdD
 			*
 			* \return Référence constante vers l'élément précédent de la liste
 			*/
-			const CNode& GetPrevious () const { if (!HasPrevious ()) return *this; return *m_Previous; }
+			const CNode& GetPrevious () const;
 			/**
 			* \brief Conversion implicite du CNode en T
 			*
@@ -143,7 +143,7 @@ namespace nsSdD
 			*
 			* \return
 			*/
-			operator T() const { return m_Info; }
+			operator T();
 		};
 		std::shared_ptr <CNode> m_Head;	/*!< Pointeur vers la sentinelle de tête*/
 		std::shared_ptr <CNode> m_Tail;	/*!< Pointeur vers la sentinelle de queue*/
@@ -156,17 +156,17 @@ namespace nsSdD
 			std::shared_ptr <CNode> m_Next;
 			std::shared_ptr <CNode> m_Previous;
 		public:
-			iterator (std::shared_ptr <CNode> Elmt = nullptr, std::shared_ptr <CNode> Next = nullptr, std::shared_ptr <CNode> Previous = nullptr)
-				:m_Elmt (Elmt), m_Next (Elmt), m_Previous (Previous) {}
-			iterator (const iterator & i) : m_Elmt (i.m_Elmt), m_Next (i.m_Next), m_Previous (i.m_Previous) {}
-				iterator& operator= (const iterator & i) { m_Elmt (i.m_Elmt); m_Next (i.m_Next); m_Previous (i.m_Previous); }
-			bool operator== (const iterator & i) const { return (m_Elmt == i.m_Elmt && m_Next == i.m_Next && m_Previous == i.m_Previous); }
-			T& operator* () {return (m_Elmt->m_Info); }
-			T* operator-> () {return *(m_Elmt->m_Info); }
-			iterator& operator++() { m_Previous = m_Elmt; m_Elmt = m_Next; m_Next = m_Next->m_Next; return this; }
-			iterator& operator++(int) { iterator Temp (this); m_Previous = m_Elmt; m_Elmt = m_Next; m_Next = m_Next->m_Next; return Temp; }
-			iterator& operator--() { m_Next = m_Elmt; m_Elmt = m_Previous; m_Previous = m_Previous->m_Previous; return this; }
-			iterator& operator--(int) { iterator Temp (this); m_Next = m_Elmt; m_Elmt = m_Previous; m_Previous = m_Previous->m_Previous; return Temp; }
+			iterator (std::shared_ptr <CNode> Elmt = nullptr, std::shared_ptr <CNode> Next = nullptr, std::shared_ptr <CNode> Previous = nullptr);
+			iterator (const iterator & i);
+			iterator& operator= (const iterator & i);
+			bool operator== (const iterator & i) const;
+			bool operator!= (const iterator & i) const;
+			T& operator* ();
+			T* operator-> ();
+			iterator& operator++();
+			iterator& operator++(int);
+			iterator& operator--();
+			iterator& operator--(int);
 		};
 		/**
 		* \brief Constructeur par défaut de CList
@@ -427,5 +427,7 @@ namespace nsSdD
 }
 
 #include "CList.hxx"
+#include "CNode.hxx"
+#include "iterator.hxx"
 
 #endif /* __CLIST_H__ */
