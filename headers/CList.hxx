@@ -1,10 +1,10 @@
-/**
+ï»¿/**
 * \CList.hxx
-* \brief Implémentation CList
-* \author Mathieu Mérino
+* \brief ImplÃ©mentation de CList
+* \author Mathieu MÃ‰RINO
 * \date 30/11/14
 *
-* Définition des fonctions de CList, une classe générique
+* DÃ©finition des fonctions de CList, une classe gÃ©nÃ©rique
 *
 */
 
@@ -123,7 +123,7 @@ const typename CLIST::CNode& CLIST::back () const
 }
 
 template <class T>
-typename CLIST::CNode&	CLIST::operator[] (std::size_t position) const
+typename CLIST::CNode&	CLIST::operator[] (std::size_t position)
 {
 	size_t Size = size ();
 	if (position > size () - 1)
@@ -156,6 +156,39 @@ typename CLIST::CNode&	CLIST::operator[] (std::size_t position) const
 	}
 }
 
+template <class T>
+const typename CLIST::CNode& CLIST::operator[] (std::size_t position) const
+{
+	size_t Size = size ();
+	if (position > size () - 1)
+		throw std::out_of_range ("Trying to access an element out of the CList's range!");
+	std::shared_ptr <CNode> ptr;
+	std::size_t i;
+	if (position > Size)
+	{
+		ptr = m_Tail->m_Previous;
+		i = Size - 1;
+	}
+	else
+	{
+		ptr = m_Head->m_Next;
+		i = 0;
+	}
+	while (true)
+	{
+		if (i == position) return *ptr;
+		if (position > Size)
+		{
+			ptr = ptr->m_Previous;
+			--i;
+		}
+		else
+		{
+			ptr = ptr->m_Next;
+			++i;
+		}
+	}
+}
 template <class T>
 void CLIST::push_front (const T& val)
 {
@@ -256,18 +289,18 @@ bool CLIST::insert (const T & position, const T & val)
 }
 
 template <class T>
-bool CLIST::erase (const T & position)
+void CLIST::erase (const T & position)
 {
 	if (size () == 0)
-		return false;
+		return;
 	for (std::shared_ptr <CNode>i = m_Head; i->m_Next != m_Tail; i = i->m_Next)
 		if (i->m_Next->m_Info == position)
 		{
 			i->m_Next->m_Next->m_Previous = i;
 			i->m_Next = i->m_Next->m_Next;
-			return true;
+			return;
 		}
-	return false;
+	return;
 }
 
 template <class T>
@@ -323,7 +356,7 @@ void CLIST::sort()
 			Buf.push_front (front());
 			pop_front ();
 		}
-		if (front() >= Buf.back ())
+		if (Buf.back () <= front ())
 		{
 			Buf.push_back (front ());
 			pop_front ();
@@ -347,7 +380,7 @@ void CLIST::reverse()
 }
 
 template <class T>
-void CLIST::edit (bool jumpLines /* = false */)
+void CLIST::edit (bool jumpLines /* = false */) const
 {
 	for (std::shared_ptr <CNode> i = m_Head->m_Next; i != m_Tail; i = i->m_Next)
 	{
