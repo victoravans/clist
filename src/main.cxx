@@ -5,7 +5,7 @@
 using namespace nsSdD;
 using namespace std;
 
-int main ()
+/*int main ()
 {
 	CList <int> a (5, 10);
 	const CList <int> b (5, 11);
@@ -15,4 +15,4 @@ int main ()
 
 	char cChar;
 	cin >> cChar;
-}
+}*/

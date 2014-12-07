@@ -86,6 +86,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\headers\CList.h" />
     <ClInclude Include="..\..\headers\CList.hxx" />
+    <ClInclude Include="..\..\headers\CNode.hxx" />
     <ClInclude Include="..\..\headers\IziAssert.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

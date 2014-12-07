@@ -76,8 +76,7 @@ namespace nsSdD
 			*
 			* 
 			*/
-			CNode (const T & val = T (), std::shared_ptr <CNode> suivant = nullptr, std::shared_ptr <CNode> precedent = nullptr)
-				:m_Info (val), m_Next (suivant), m_Previous (precedent){}
+			CNode (const T & val = T (), std::shared_ptr <CNode> suivant = nullptr, std::shared_ptr <CNode> precedent = nullptr);
 			/**
 			* \brief Vérifie si l'élément est le dernier de la liste
 			*
@@ -86,7 +85,7 @@ namespace nsSdD
 			*
 			* \return true si le CNode n'est pas le dernier de la liste, false sinon
 			*/
-			bool HasNext () const { return (m_Next->m_Next != nullptr); } 
+			bool HasNext () const;
 			/**
 			* \brief Vérifie si l'élément est le premier de la liste
 			*
@@ -95,7 +94,7 @@ namespace nsSdD
 			*
 			* \return true si le CNode n'est pas le premier de la liste, false sinon
 			*/
-			bool HasPrevious () const { return (m_Previous->m_Previous != nullptr); }
+			bool HasPrevious () const;
 			/**
 			* \brief Récupère l'élément suivant de la liste
 			*
@@ -104,7 +103,7 @@ namespace nsSdD
 			*
 			* \return Référence vers le prochain élément de la liste
 			*/
-			CNode& GetNext (){ if (!HasNext ()) return *this; return *m_Next; }
+			CNode& GetNext ();
 			/**
 			* \brief Récupère l'élément suivant de la liste
 			*
@@ -115,7 +114,7 @@ namespace nsSdD
 			*
 			* \return Référence constante vers le prochain élément de la liste
 			*/
-			const CNode& GetNext () const { if (!HasNext ()) return *this; return *m_Next; }
+			const CNode& GetNext () const;
 			/**
 			* \brief Récupère l'élément précédent de la liste
 			*
@@ -124,7 +123,7 @@ namespace nsSdD
 			*
 			* \return Référence vers l'élément précédent de la liste
 			*/
-			CNode& GetPrevious () { if (!HasPrevious ()) return *this; return *m_Previous; }
+			CNode& GetPrevious ();
 			/**
 			* \brief Récupère l'élément précédent de la liste
 			*
@@ -135,7 +134,7 @@ namespace nsSdD
 			*
 			* \return Référence constante vers l'élément précédent de la liste
 			*/
-			const CNode& GetPrevious () const { if (!HasPrevious ()) return *this; return *m_Previous; }
+			const CNode& GetPrevious () const;
 			/**
 			* \brief Conversion implicite du CNode en T
 			*
@@ -144,7 +143,7 @@ namespace nsSdD
 			*
 			* \return
 			*/
-			operator T() const { return m_Info; }
+			operator T() const;
 		};
 
 		std::shared_ptr <CNode> m_Head;	/*!< Pointeur vers la sentinelle de tête*/
@@ -405,6 +404,7 @@ namespace nsSdD
 	};
 }
 
+#include "CNode.hxx"
 #include "CList.hxx"
 
 #endif /* __CLIST_H__ */
