@@ -230,12 +230,12 @@ template <class T>
 void CLIST::resize (std::size_t n, T val /* = T() */)
 {
 	size_t Size = size();
-	push_back (val);
-	if (n > ++Size)
+	if (Size == n) return;
+	if (n > Size)
 		while (Size++ < n)
 			push_back (val);
 
-	else if (n < Size)
+	else
 		for (size_t i = Size; i > n; --i)
 		{
 			m_Tail->m_Previous->m_Previous->m_Next = m_Tail;

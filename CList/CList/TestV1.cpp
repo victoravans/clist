@@ -230,9 +230,17 @@ namespace {
 }//namespace
 
 int main(){
+	CList <int> a;
+	a.resize (5, 3);
+	a.edit ();
+	cout << endl << a.size ();
+
 	//ConstructorTest();
 	//EmptyTest();
 	//Size_tTest();
 	//FrontBackTest ();
+
+	char Char;
+	std::cin >> Char;
 	return 0;
 }
