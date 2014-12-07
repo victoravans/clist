@@ -8,11 +8,13 @@ using namespace std;
 int main ()
 {
 	CList <int> a, b;
-	for (unsigned i = 0; i < 10; ++i)
+	for (unsigned i = 0; i < 20; ++i)
 	{
 		a.push_back (rand () % 10);
 	}
 	const CList <int> c (a);
+	a.edit ();
+	cout << endl;
 	a.sort ();
 	a.edit ();
 

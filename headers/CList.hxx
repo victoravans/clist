@@ -316,21 +316,16 @@ template <class T>
 void CLIST::sort()
 {
 	CList <T> Temp, Buf;
-	T val = front ();
-	edit ();
-	cout << endl;
 	while (m_Head->m_Next != m_Tail)
 	{
 		//Insérer le premier élément dans le buffer vide
-		Buf.push_front (val);
+		Buf.push_front (front ());
 		pop_front ();
-		val = front ();
 		//Remplir le buffer d'éléments croissants
-		while (!(val < Buf.back ()))
+		while (!(front() < Buf.back ()))
 		{
-			Buf.push_back (val);
+			Buf.push_back (front());
 			pop_front ();
-			val = front ();
 		}
 		//Vider le buffer dans Temp en triant
 		Temp.merge (Buf);
