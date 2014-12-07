@@ -7,9 +7,22 @@ using namespace std;
 
 int main ()
 {
-	CList <int> a;
-	for (unsigned i = 0; i < 10; ++i) a.push_back (i);
-	cout << a.size ();
+	CList <int> a, b;
+	for (unsigned i = 0; i < 10; ++i)
+	{
+		a.push_back (rand () % 10);
+	}
+	const CList <int> c (a);
+	a.sort ();
+	a.edit ();
+
+
+
+
+
+
+
+
 
 
 

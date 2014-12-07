@@ -150,18 +150,19 @@ namespace nsSdD
 	public:
 		class iterator
 		{
+		friend CList;
 		private:
 			std::shared_ptr <CNode> m_Elmt;
-			std::shared_ptr <CNode> m_Next;
-			std::shared_ptr <CNode> m_Previous;
 		public:
 			iterator (const iterator & i);
-			iterator (std::shared_ptr <CNode> Elmt = nullptr, std::shared_ptr <CNode> Next = nullptr, std::shared_ptr <CNode> Previous = nullptr);
-			iterator& operator= (const iterator & i);
+			iterator (std::shared_ptr <CNode> Elmt = nullptr);
+			iterator operator= (const iterator & i);
 			bool operator== (const iterator & i) const;
 			bool operator!= (const iterator & i) const;
 			T& operator* ();
+			const T& operator* () const;
 			T* operator-> ();
+			const T* operator-> () const;
 			iterator& operator++();
 			iterator operator++(int);
 			iterator& operator--();
@@ -250,7 +251,7 @@ namespace nsSdD
 		*
 		* \return La référence vers le premier élément de la liste
 		*/
-		iterator front ();		//reference to the first element
+		T& front ();		//reference to the first element
 		/** VERIFIER
 		* \brief Renvoie le premier élément
 		*
@@ -261,7 +262,7 @@ namespace nsSdD
 		*
 		* \return La référence constante vers le premier élément de la liste
 		*/
-		const iterator front () const;		//const reference to the first element
+		const T& front () const;		//const reference to the first element
 		/** VERIFIER
 		* \brief Renvoie le dernier élément
 		*
@@ -270,7 +271,7 @@ namespace nsSdD
 		*
 		* \return La référence vers le dernier élément de la liste
 		*/
-		iterator back ();				//reference to the last element
+		T& back ();				//reference to the last element
 		/** VERIFIER
 		* \brief Renvoie le dernier élément
 		*
@@ -281,7 +282,7 @@ namespace nsSdD
 		*
 		* \return La référence constante vers le dernier élément de la liste
 		*/
-		const iterator back () const;	//const reference to the last element
+		const T& back () const;	//const reference to the last element
 		/**
 		* \brief Rajoute un élément au début
 		*
@@ -341,19 +342,11 @@ namespace nsSdD
 		*
 		* \param val La valeur des éléments à supprimer
 		*/
-		void remove (const T& val);	//removes list's elements of value val
-		/**
-		* \brief Insère un élément
-		*
-		* Recherche le premier élément de la liste correspondant à la position donnée en paramètre, et insère
-		* la valeur donnée dans une nouvelle case avant celui-ci. Si aucun élément de la liste n'a une valeur
-		* égale à celle de la position, l'insertion échoue
-		*
-		* \param position La valeur de l'élément avant lequel insérer le nouvel élément
-		* \param val La valeur de l'élément à insérer
-		* \return true si l'insertion a réussi, false si elle échoue
-		*/
-		bool insert (const T & position, const T & val);
+		void remove (const T& val);
+		iterator insert (iterator position, const T& val);
+		void insert (iterator position, size_t n, const T& val);
+		template <class InputIterator>
+		void insert (iterator position, InputIterator first, InputIterator last);
 		/**
 		* \brief Supprime le premier élément égal à la valeur donnée
 		*
@@ -362,7 +355,8 @@ namespace nsSdD
 		*
 		* \param position La valeur de l'élément à supprimer
 		*/
-		void erase (const T & position);
+		iterator erase (iterator position);
+		iterator erase (iterator first, iterator last);
 		/**
 		* \brief Supprime les doublons qui se suivent
 		*
