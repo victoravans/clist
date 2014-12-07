@@ -1,1 +1,0 @@
-﻿#define CNODE nsSdD::CList<T>::CNode
