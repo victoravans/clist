@@ -230,9 +230,9 @@ namespace {
 }//namespace
 
 int main(){
-	ConstructorTest();
-	EmptyTest();
-	Size_tTest();
-	FrontBackTest ();
+	//ConstructorTest();
+	//EmptyTest();
+	//Size_tTest();
+	//FrontBackTest ();
 	return 0;
 }

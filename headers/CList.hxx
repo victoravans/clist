@@ -231,7 +231,7 @@ void CLIST::resize (std::size_t n, T val /* = T() */)
 {
 	size_t Size = size();
 	push_back (val);
-	if (n > Size)
+	if (n > ++Size)
 		while (Size++ < n)
 			push_back (val);
 
