@@ -315,6 +315,13 @@ void CLIST::unique()
 template <class T>
 void CLIST::merge (CList& l)
 {
+	if (size () == 0)
+	{
+		if (l.size () == 0)
+			return;
+		push_front (l.front ());
+		l.pop_front ();
+	}
 	for (std::shared_ptr <CNode>i = m_Head->m_Next; i != m_Tail; i = i->m_Next)
 		for (std::shared_ptr <CNode>j = l.m_Head->m_Next; j != l.m_Tail; )
 		{
@@ -342,27 +349,17 @@ void CLIST::merge (CList& l)
 template <class T>
 void CLIST::sort()
 {
-	if (size () <= 1)
-		return;
 	CList <T> Temp, Buf;
-	Temp.push_front (front ());
-	pop_front ();
 	while (m_Head->m_Next != m_Tail)
 	{
-		if (Buf.empty ())
-		{
-			Buf.push_front (front());
-			pop_front ();
-		}
-		if (Buf.back () <= front ())
+		Buf.push_front (front());
+		pop_front ();
+		while (! (front () < Buf.back ()) )
 		{
 			Buf.push_back (front ());
 			pop_front ();
 		}
-		else
-		{
 			Temp.merge (Buf);
-		}
 	}
 	merge (Temp);
 }

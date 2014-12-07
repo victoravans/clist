@@ -231,9 +231,12 @@ namespace {
 
 int main(){
 	CList <int> a;
-	a.resize (5, 3);
+	for (unsigned i = 0; i < 10; ++i)
+		a.push_back (rand () % 10);
 	a.edit ();
-	cout << endl << a.size ();
+	cout << endl;
+	a.sort ();
+	a.edit ();
 
 	//ConstructorTest();
 	//EmptyTest();
