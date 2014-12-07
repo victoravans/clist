@@ -331,7 +331,7 @@ void CLIST::sort()
 		Temp.merge (Buf);
 	}
 	//Vider Temp dans this
-	merge (Temp);
+	swap (Temp);
 }
 
 template <class T>

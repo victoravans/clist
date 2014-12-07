@@ -16,8 +16,7 @@ int main ()
 	a.sort ();
 	a.edit ();
 	cout << endl;
-	a.reverse ();
-	a.edit ();
+	
 	
 
 
