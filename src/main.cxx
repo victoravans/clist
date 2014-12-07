@@ -7,10 +7,18 @@ using namespace std;
 
 int main ()
 {
-	CList <string> a;
-	for (unsigned i = 0; i < 10; ++i) a.push_back ("a");
-	cout << a.size ();
-	CList<string> b (a);
+	CList <int> a;
+	for (unsigned i = 0; i < 10; ++i) a.push_back (i);
+	a.edit ();
+	cout << endl;
+	auto Iter = a.begin ();
+	cout << *++Iter << endl;
+	CList<int> b (a);
+	b.edit ();
+	*b.front () = 2;
+	cout << endl;
+	b.edit ();
+	a.edit ();
 	
 
 

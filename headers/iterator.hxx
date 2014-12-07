@@ -28,7 +28,7 @@ typename ITER& ITER::operator= (const iterator & i)
 template <class T>
 bool ITER::operator== (const iterator & i) const
 {
-	return (m_Elmt == i.m_Elmt && m_Next == i.m_Next && m_Previous == i.m_Previous);
+	return (m_Elmt == i.m_Elmt);
 }
 
 template <class T>
