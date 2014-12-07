@@ -2,7 +2,7 @@
 #define __CLIST_H__
 
 // BRANCHE 2
-
+int a ;
 /**
 * \CList.h
 * \brief Déclaration CList
