@@ -91,6 +91,7 @@ namespace {
 		cout << "Creation de trois listes, une vide, une remplie d'éléments vides et une remplie d'entiers."
 			<< endl;
 		CList<int>list1;
+		const CList<int>clist1;
 		CList<int>list2(size);
 		CList<int>list3(size, value);
 		cout << "Creation terminee, debut des tests de empty()..."
@@ -98,6 +99,7 @@ namespace {
 			<< endl
 			<< endl;
 		IZI_ASSERT(list1.empty());
+		IZI_ASSERT(clist1.empty());
 		IZI_ASSERT(!list2.empty());
 		IZI_ASSERT(!list3.empty());
 		cout << "Termine"
@@ -115,11 +117,13 @@ namespace {
 		cout << "Creation d'une liste de taille " << size << "."
 			<< endl;
 		CList<int>list(size);
+		const CList<int>clist = list;
 		cout << "Creation terminee, debut du test de la methode size()..."
 			<< endl
 			<< endl
 			<< endl;
 		IZI_ASSERT(list.size() == size);
+		IZI_ASSERT(clist.size() == size);
 		cout << "Termine"
 			<< endl;
 		cout << "Fonctionalite testee :" << endl
@@ -133,12 +137,15 @@ namespace {
 		cout << "Creation d'une liste de taille " << size << " remplie de " << value
 			<< endl;
 		CList<int>list(size, value);
+		const CList<int>clist=list;
 		cout << "Creation terminee, debut des tests de back() et front()"
 			<< endl
 			<< endl
 			<< endl;
 		IZI_ASSERT(list.front() == list[0]);
 		IZI_ASSERT(list.back() == list[size - 1]);
+		IZI_ASSERT(clist.front() == list[0]);
+		IZI_ASSERT(clist.back() == list[size - 1]);
 		cout << "Termine"
 			<< endl;
 		cout << "Fontionalites testees :" << endl
@@ -223,6 +230,46 @@ namespace {
 		IZI_ASSERT(list[i - 1] != list[i - 2] && list[i - 1] != list[i]);
 	}//UniqueTest()
 
+	void SortTest(){
+		CList<int>list;
+		for (unsigned n = 0; n < 10; ++n)
+			list.push_back(rand() % 10);
+		list.edit();
+		list.sort();
+		list.edit();
+		i = rand() % 9;
+			IZI_ASSERT(list[i] >= list[i + 1]);
+	}//SortTest()
+
+	void MergeTest(){
+		CList<int>list1; 
+		CList<int>list2;
+		for (unsigned n = 0; n < 10; ++n) {
+			list1.push_back(rand() % 10);
+			list2.push_back(rand() % 10);
+		}//for()
+		list1.sort();
+		list2.sort();
+		list1.edit();
+		list2.edit();
+		list1.merge(list2);
+		list1.edit();
+		i = rand() % 19;
+		IZI_ASSERT(list1[i] >= list1[i + 1]);
+	}//MergeTest()
+
+	void ReverseTest(){
+		CList<int>list;
+		CList<int>wlist;
+		for (unsigned n = 0; n < 10; ++n)
+			list.push_back(rand() % 10);
+		wlist = list;
+		list.edit();
+		list.reverse();
+		list.edit();
+		i = rand() % 10;
+		IZI_ASSERT(list[i] == wlist[9 - i]);
+	}//ReverseTest()
 
 
 	
