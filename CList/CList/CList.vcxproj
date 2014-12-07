@@ -81,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\main.cxx" />
+    <ClCompile Include="..\..\src\TestV2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\headers\CList.h" />
