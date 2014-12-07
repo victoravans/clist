@@ -41,7 +41,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);E:\Users\Mathieu\Documents\Projets\git\clist\headers</IncludePath>
+    <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);C:\Users\Hugo\Source\Repos\clist\headers;E:\Users\Mathieu\Documents\Projets\git\clist\headers</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -81,10 +81,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\main.cxx" />
+    <ClCompile Include="TestV1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\headers\CList.h" />
     <ClInclude Include="..\..\headers\CList.hxx" />
+    <ClInclude Include="..\..\headers\IziAssert.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
