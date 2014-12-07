@@ -370,6 +370,8 @@ void CLIST::sort()
 template <class T>
 void CLIST::reverse()
 {
+	if (size () <= 1)
+		return;
 	for (std::shared_ptr <CNode>i = m_Head->m_Next; i != m_Tail; i = i-> m_Previous)
 		std::swap (i->m_Next, i->m_Previous);
 
