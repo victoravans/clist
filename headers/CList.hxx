@@ -337,8 +337,10 @@ void CLIST::sort()
 template <class T>
 void CLIST::reverse()
 {
-	for (std::shared_ptr <CNode>i = m_Head->m_Next; i != m_Tail; i = i-> m_Previous)
-		std::swap (i->m_Next, i->m_Previous);
+	if (size () <= 1)
+		return;
+	for (iterator i = begin (); i != end (); --i)
+		std::swap (i.m_Elmt->m_Next, i.m_Elmt->m_Previous);
 
 	std::swap (m_Head->m_Next->m_Next, m_Tail->m_Previous->m_Previous);
 	std::swap (m_Head->m_Next, m_Tail->m_Previous);

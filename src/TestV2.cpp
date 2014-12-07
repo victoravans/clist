@@ -13,10 +13,12 @@ int main ()
 		a.push_back (rand () % 10);
 	}
 	const CList <int> c (a);
-	a.edit ();
-	cout << endl;
 	a.sort ();
 	a.edit ();
+	cout << endl;
+	a.reverse ();
+	a.edit ();
+	
 
 
 
