@@ -37,18 +37,19 @@ CLIST::CList (std::size_t n, const T& val):m_Head (make_shared<CNode> ()), m_Tai
 }
 
 template <class T>
-CLIST::CList (const CList& l):m_Head (make_shared<CNode> ()), m_Tail (make_shared<CNode> ())
+CLIST::CList (const CList& l) :m_Head (make_shared<CNode> ()), m_Tail (make_shared<CNode> ())
 {
-	size_t lSize = l.size();
 	m_Head->m_Next = m_Tail;
 	m_Tail->m_Previous = m_Head;
-	if (lSize != size())
-		resize(lSize);
-	
-	std::shared_ptr <CNode> i = m_Head;
+	resize(l.size());
+	cout << size ();
+	iterator j = l.begin ();
+	for (iterator i = begin (); i != end (); ++i, ++j)
+		*i = *j;
+	/*std::shared_ptr <CNode> i = m_Head;
 	std::shared_ptr <CNode> j = l.m_Head;
 	for (; i != m_Tail; i = i->m_Next, j = j->m_Next)
-		i->m_Info = j->m_Info;
+		i->m_Info = j->m_Info;*/
 }
 
 template <class T>
@@ -257,7 +258,7 @@ void CLIST::resize (std::size_t n, T val /* = T() */)
 {
 	size_t Size = size();
 	push_back (val);
-	if (n > Size)
+	if (n > ++Size)
 		while (Size++ < n)
 			push_back (val);
 

@@ -7,9 +7,11 @@ using namespace std;
 
 int main ()
 {
-	CList <int> a (2, 10);
-	int i = *(a.front ());
-	cout << i;
+	CList <string> a;
+	for (unsigned i = 0; i < 10; ++i) a.push_back ("a");
+	cout << a.size ();
+	CList<string> b (a);
+	
 
 
 

@@ -46,7 +46,7 @@ T& ITER::operator* ()
 template <class T>
 T* ITER::operator-> ()
 {
-	return *(m_Elmt->m_Info);
+	return &(m_Elmt->m_Info);
 }
 
 template <class T>
@@ -58,13 +58,13 @@ typename ITER& ITER::operator++()
 	return *this;
 }
 template <class T>
-typename ITER& ITER::operator++(int)
+typename ITER ITER::operator++(int)
 {
-	iterator Temp (this);
+	iterator Temp (*this);
 	m_Previous = m_Elmt;
 	m_Elmt = m_Next;
 	m_Next = m_Next->m_Next;
-	return *Temp;
+	return Temp;
 }
 template <class T>
 typename ITER& ITER::operator--()
@@ -75,7 +75,7 @@ typename ITER& ITER::operator--()
 	return *this;
 }
 template <class T>
-typename ITER& ITER::operator--(int)
+typename ITER ITER::operator--(int)
 {
 	iterator Temp (this);
 	m_Next = m_Elmt;
@@ -86,7 +86,7 @@ typename ITER& ITER::operator--(int)
 template <class T>
 void ITER::Verif () const
 {
-	if (m_Previous == nullptr) cout << "null ";
+	if (m_Previous == nullptr) cout << "N ";
 	else cout << m_Previous->m_Info << " ";
 	cout << m_Elmt->m_Info << " " << m_Next->m_Info << " " << endl;
 }

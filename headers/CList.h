@@ -155,17 +155,17 @@ namespace nsSdD
 			std::shared_ptr <CNode> m_Next;
 			std::shared_ptr <CNode> m_Previous;
 		public:
-			iterator (std::shared_ptr <CNode> Elmt = nullptr, std::shared_ptr <CNode> Next = nullptr, std::shared_ptr <CNode> Previous = nullptr);
 			iterator (const iterator & i);
+			iterator (std::shared_ptr <CNode> Elmt = nullptr, std::shared_ptr <CNode> Next = nullptr, std::shared_ptr <CNode> Previous = nullptr);
 			iterator& operator= (const iterator & i);
 			bool operator== (const iterator & i) const;
 			bool operator!= (const iterator & i) const;
 			T& operator* ();
 			T* operator-> ();
 			iterator& operator++();
-			iterator& operator++(int);
+			iterator operator++(int);
 			iterator& operator--();
-			iterator& operator--(int);
+			iterator operator--(int);
 			void Verif () const;
 		};
 		/**
