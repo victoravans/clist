@@ -298,12 +298,16 @@ namespace nsSdD
 		*
 		* \param val La valeur de l'élément à insérer
 		*/
+		template <class... Args>
+		void emplace_front (Args&&... args);
 		void push_back (const T& val);		//inserts an element at the end of the list (before the tail sentinel)
 		/**
 		* \brief Supprime le premier élément
 		*
 		* Le premier élément de la liste disparait. Sans effet si la liste est vide.
 		*/
+		template <class... Args>
+		void emplace_back (Args&&... args);
 		void pop_front();	//deletes the first element of the list
 		/**
 		* \brief Supprime le dernier élément
@@ -342,11 +346,16 @@ namespace nsSdD
 		*
 		* \param val La valeur des éléments à supprimer
 		*/
+		void splice (iterator position, CList& x);
+		void splice (iterator position, CList& x, iterator i);
+		void splice (iterator position, CList& x, iterator first, iterator last);
 		void remove (const T& val);
 		iterator insert (iterator position, const T& val);
 		void insert (iterator position, size_t n, const T& val);
 		template <class InputIterator>
 		void insert (iterator position, InputIterator first, InputIterator last);
+		template <class... Args>
+		iterator emplace (iterator position, Args&&... args);
 		/**
 		* \brief Supprime le premier élément égal à la valeur donnée
 		*

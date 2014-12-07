@@ -8,16 +8,20 @@ using namespace std;
 int main ()
 {
 	CList <int> a, b;
-	for (unsigned i = 0; i < 20; ++i)
+	for (unsigned i = 0; i < 5; ++i)
 	{
-		a.push_back (rand () % 10);
+		a.push_back (2);
 	}
-	const CList <int> c (a);
-	a.sort ();
+	for (unsigned i = 0; i < 3; ++i)
+	{
+		b.push_back (5);
+	}
+	
+	a.splice (++a.begin(), b);
+	cout << endl;
 	a.edit ();
 	cout << endl;
-	
-	
+	b.edit ();
 
 
 

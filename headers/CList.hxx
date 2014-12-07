@@ -145,9 +145,25 @@ void CLIST::push_front (const T& val)
 }
 
 template <class T>
+template <class... Args>
+void CLIST::emplace_front (Args&&... args)
+{
+	m_Head->m_Next->m_Previous = std::make_shared <CNode> (T (args...), m_Head->m_Next, m_Head);
+	m_Head->m_Next = m_Head->m_Next->m_Previous;
+}
+
+template <class T>
 void CLIST::push_back (const T& val)
 {
 	m_Tail->m_Previous->m_Next = std::make_shared <CNode> (val, m_Tail, m_Tail->m_Previous);
+	m_Tail->m_Previous = m_Tail->m_Previous->m_Next;
+}
+
+template <class T>
+template <class... Args>
+void CLIST::emplace_back (Args&&... args)
+{
+	m_Tail->m_Previous->m_Next = std::make_shared <CNode> (T (args...), m_Tail, m_Tail->m_Previous);
 	m_Tail->m_Previous = m_Tail->m_Previous->m_Next;
 }
 
@@ -194,17 +210,26 @@ void CLIST::resize (std::size_t n, T val /* = T() */)
 template <class T>
 void CLIST::clear()
 {
-	if (size () == 0) return;
-	for (std::shared_ptr <CNode>i = m_Head->m_Next->m_Next;; i = i->m_Next)
+	size_t Size = size ();
+	if (Size == 0) return;
+	for (size_t i = 0; i < Size; ++i)
 	{
-		i->m_Previous->m_Next = nullptr;
-		i->m_Previous->m_Previous = nullptr;
-		if (i == m_Tail)
-		{
-			m_Head->m_Next = i;
-			i->m_Previous = m_Head;
-		}
+		m_Head->m_Next = m_Head->m_Next->m_Next;
+		m_Head->m_Next->m_Previous = m_Head;
 	}
+}
+
+template <class T>
+void CLIST::splice (iterator position, CList& x)
+{
+	insert (position, x.begin (), x.end ());
+	x.clear ();
+}
+
+template <class T>
+void CLIST::splice (iterator position, CList& x, iterator i)
+{
+
 }
 
 template <class T>
@@ -244,6 +269,14 @@ void CLIST::insert (iterator position, InputIterator first, InputIterator last)
 		Iter.m_Elmt->m_Next = make_shared <CNode> (T(*first), position.m_Elmt, Iter.m_Elmt);
 }
 
+template <class T>
+template <class... Args>
+typename CLIST::iterator CLIST::emplace (iterator position, Args&&... args)
+{
+	position.m_Elmt->m_Previous->m_Next = make_shared <CNode> (T(args...), position.m_Elmt, position.m_Elmt->m_Previous);
+	position.m_Elmt->m_Previous = position.m_Elmt->m_Previous->m_Next;
+	return iterator (position.m_Elmt->m_Previous);
+}
 template <class T>
 typename CLIST::iterator CLIST::erase (iterator position)
 {
