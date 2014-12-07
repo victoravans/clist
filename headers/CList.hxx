@@ -42,7 +42,6 @@ CLIST::CList (const CList& l) :m_Head (make_shared<CNode> ()), m_Tail (make_shar
 	m_Head->m_Next = m_Tail;
 	m_Tail->m_Previous = m_Head;
 	resize(l.size());
-	char C;
 	iterator j = l.begin ();
 	for (iterator i = begin (); i != end (); ++i, ++j) *i = *j;
 }
@@ -50,16 +49,9 @@ CLIST::CList (const CList& l) :m_Head (make_shared<CNode> ()), m_Tail (make_shar
 template <class T>
 CLIST& CLIST::operator= (const CList& l)
 {
-	size_t lSize = l.size();
-	if (lSize != size())
-		resize (lSize);
-
-	iterator i = m_Head;
-	iterator j = l.m_Head;
-	//std::shared_ptr <CNode> i = m_Head;
-	//std::shared_ptr <CNode> j = l.m_Head;
-	for (;i != m_Tail; i = i->m_Next, j=j->m_Next)
-		i->m_Info = j->m_Info;
+	resize (l.size ());
+	iterator j = l.begin ();
+	for (iterator i = begin (); i != end (); ++i, ++j) *i = *j;
 	return *this;
 }
 
@@ -251,17 +243,17 @@ void CLIST::swap (CList& l)
 template <class T>
 void CLIST::resize (std::size_t n, T val /* = T() */)
 {
-	size_t Size = size();
-	push_back (val);
-	if (n > ++Size)
+	size_t Size = size ();
+	if (Size == n) return;
+	if (n > Size)
 		while (Size++ < n)
 			push_back (val);
 
-	else if (n < Size)
+	else
 		for (size_t i = Size; i > n; --i)
 		{
-			m_Tail->m_Previous->m_Previous->m_Next = m_Tail;
-			m_Tail->m_Previous = m_Tail->m_Previous->m_Previous;
+		m_Tail->m_Previous->m_Previous->m_Next = m_Tail;
+		m_Tail->m_Previous = m_Tail->m_Previous->m_Previous;
 		}
 }
 
