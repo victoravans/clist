@@ -58,11 +58,11 @@ CLIST& CLIST::operator= (const CList& l)
 	if (lSize != size())
 		resize (lSize);
 
-	iterator i = m_Head;
-	iterator j = l.m_Head;
+	iterator i = begin();
+	iterator j = l.begin();
 	//std::shared_ptr <CNode> i = m_Head;
 	//std::shared_ptr <CNode> j = l.m_Head;
-	for (;i != m_Tail; i = i->m_Next, j=j->m_Next)
+	for (;i != end(); ++i, ++j)
 		i->m_Info = j->m_Info;
 	return *this;
 }
@@ -82,13 +82,13 @@ const typename CLIST::iterator CLIST::begin () const
 template <class T>
 typename CLIST::iterator CLIST::end ()
 {
-	return iterator (m_Tail->m_Previous, nullptr, m_Tail->m_Previous->m_Previous);
+	return iterator (m_Tail, nullptr, m_Tail->m_Previous);
 }
 
 template <class T>
 const typename CLIST::iterator CLIST::end () const
 {
-	return iterator (m_Tail->m_Previous, nullptr, m_Tail->m_Previous->m_Previous);
+	return iterator (m_Tail, nullptr, m_Tail->m_Previous);
 }
 
 template <class T>
@@ -125,27 +125,27 @@ size_t CLIST::size () const
 }
 
 template <class T>
-typename CLIST::iterator CLIST::front ()
+T& CLIST::front ()
 {
-	return *(m_Head->m_Next->)
+	return m_Head->m_Next->m_Info;
 }
 
 template <class T>
-const typename CLIST::iterator CLIST::front () const
+const T& CLIST::front () const
 {
-	return iterator (m_Head->m_Next, m_Head->m_Next->m_Next, nullptr);
+	return m_Head->m_Next->m_Info;
 }
 
 template <class T>
-typename CLIST::iterator CLIST::back ()
+T& CLIST::back ()
 {
-	return iterator (m_Tail->m_Previous, nullptr, m_Tail->m_Previous->m_Previous);
+	return m_Tail->m_Previous->m_Info;
 }
 
 template <class T>
-const typename CLIST::iterator CLIST::back () const
+const T& CLIST::back () const
 {
-	return iterator (m_Tail->m_Previous, nullptr, m_Tail->m_Previous->m_Previous);
+	return m_Tail->m_Previous->m_Info;
 }
 
 template <class T>
@@ -408,9 +408,9 @@ void CLIST::reverse()
 template <class T>
 void CLIST::edit (bool jumpLines /* = false */) const
 {
-	for (std::shared_ptr <CNode> i = m_Head->m_Next; i != m_Tail; i = i->m_Next)
+	for (iterator Iter = begin (); Iter != end (); ++Iter)
 	{
-		std::cout << i->m_Info;
+		std::cout << *Iter;
 		if (jumpLines) std::cout << std::endl;
 		else std::cout << "; ";
 		std::cout << std::flush;

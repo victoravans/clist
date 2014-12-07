@@ -80,6 +80,8 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\CNode.cpp" />
+    <ClCompile Include="..\..\src\iterator.cpp" />
     <ClCompile Include="..\..\src\main.cxx" />
   </ItemGroup>
   <ItemGroup>
