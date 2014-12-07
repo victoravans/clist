@@ -80,13 +80,13 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\CNode.cpp" />
+    <ClCompile Include="..\..\src\iterator.cpp" />
     <ClCompile Include="..\..\src\main.cxx" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\headers\CList.h" />
     <ClInclude Include="..\..\headers\CList.hxx" />
-    <ClInclude Include="..\..\headers\CNode.hxx" />
-    <ClInclude Include="..\..\headers\iterator.hxx" />
     <ClInclude Include="..\..\headers\IziAssert.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

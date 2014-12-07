@@ -21,6 +21,12 @@
     <ClCompile Include="..\..\src\main.cxx">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\iterator.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\CNode.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\headers\CList.h">
@@ -30,12 +36,6 @@
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="..\..\headers\IziAssert.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\headers\CNode.hxx">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\headers\iterator.hxx">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
