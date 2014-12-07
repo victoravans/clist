@@ -244,16 +244,12 @@ void CLIST::resize (std::size_t n, T val /* = T() */)
 template <class T>
 void CLIST::clear()
 {
-	if (size () == 0) return;
-	for (std::shared_ptr <CNode>i = m_Head->m_Next->m_Next;; i = i->m_Next)
+	size_t Size = size ();
+	if (Size == 0) return;
+	for (size_t i = 0; i < Size; ++i)
 	{
-		i->m_Previous->m_Next = nullptr;
-		i->m_Previous->m_Previous = nullptr;
-		if (i == m_Tail)
-		{
-			m_Head->m_Next = i;
-			i->m_Previous = m_Head;
-		}
+		m_Head->m_Next = m_Head->m_Next->m_Next;
+		m_Head->m_Next->m_Previous = m_Head;
 	}
 }
 

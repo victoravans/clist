@@ -234,8 +234,8 @@ int main(){
 	for (unsigned i = 0; i < 10; ++i)
 		a.push_back (rand () % 10);
 	a.edit ();
+	a.clear ();
 	cout << endl;
-	a.sort ();
 	a.edit ();
 
 	//ConstructorTest();
