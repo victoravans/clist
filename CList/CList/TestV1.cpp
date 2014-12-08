@@ -13,6 +13,10 @@ namespace {
 	int value(14);
 	int value1(8);
 	unsigned i;
+	bool constructor1 = true;
+	bool constructor2 = true;
+	bool constructor3 = true;
+	bool equaloperator = true;
 
 	void ConstructorTest() {		
 		cout << "Creation d'une premiere liste remplie de " << value << " dont la taille vaut "<< size
@@ -30,9 +34,14 @@ namespace {
 			<< endl
 			<< endl;
 
-		i = rand() % size;
-		IZI_ASSERT(list [i] == value);
-		IZI_ASSERT(list [i] == list2[i]);
+		for (unsigned i(0); constructor1 && i < size; ++i)
+			constructor1 = list[i] == value;
+
+		for (unsigned i(0); constructor2 && i < size; ++i)
+			constructor2 = list[i] == list2[i];
+
+		IZI_ASSERT(constructor1);
+		IZI_ASSERT(constructor2);
 		
 
 		cout << "Test termine."
@@ -52,8 +61,10 @@ namespace {
 			<< endl
 			<< endl;
 
-		i = rand() % size;
-		IZI_ASSERT(list3[i] == value);
+		for (unsigned i(0); constructor3 && i < size; ++i)
+			constructor3 = list3[i] == value;
+
+		IZI_ASSERT(constructor3);
 
 		cout << "Termine"
 			<< endl
@@ -67,8 +78,10 @@ namespace {
 			<< endl
 			<< endl;
 
-		i = rand() % size;
-		IZI_ASSERT(list4[i] == list[i]);
+		for (unsigned i(0); equaloperator && i < size; ++i)
+			list4[i] == list[i];
+
+		IZI_ASSERT(equaloperator);
 
 			cout << "Termine"
 				<< endl;
@@ -83,11 +96,14 @@ namespace {
 				<< "-Operateur []" << endl
 				<< "-Methode assign()" << endl;
 				
-			char c;
-			cin >> c;
+			
 	}//ConstructorTest()
 
 	void EmptyTest(){
+		bool emptylist = true;
+		bool emptyclist = true;
+		bool notemptylist1 = true;
+		bool notemptylist2 = true;
 		cout << "Creation de trois listes, une vide, une remplie d'éléments vides et une remplie d'entiers."
 			<< endl;
 		CList<int>list1;
@@ -98,18 +114,25 @@ namespace {
 			<< endl
 			<< endl
 			<< endl;
-		IZI_ASSERT(list1.empty());
-		IZI_ASSERT(clist1.empty());
-		IZI_ASSERT(!list2.empty());
-		IZI_ASSERT(!list3.empty());
+
+
+		emptylist = list1.empty();
+		emptyclist = clist1.empty();
+		notemptylist1 = !list2.empty();
+		notemptylist2 = !list3.empty();
+
+		IZI_ASSERT(emptylist);
+		IZI_ASSERT(emptyclist);
+		IZI_ASSERT(notemptylist1);
+		IZI_ASSERT(notemptylist2);
+
+
 		cout << "Termine"
 			<< endl;
 
 		cout << "Fonctionnalite testee :" << endl
 			<< "Methode assign()" << endl;
 
-		char c;
-		cin >> c;
 	}//EmptyTest()
 
 
@@ -122,15 +145,16 @@ namespace {
 			<< endl
 			<< endl
 			<< endl;
+
 		IZI_ASSERT(list.size() == size);
 		IZI_ASSERT(clist.size() == size);
+
 		cout << "Termine"
 			<< endl;
 		cout << "Fonctionalite testee :" << endl
 			<< "Methode size()" << endl;
 
-		char c;
-		cin >> c;
+
 	}//Size_tTest()
 
 	void FrontBackTest(){
@@ -142,39 +166,51 @@ namespace {
 			<< endl
 			<< endl
 			<< endl;
+
 		IZI_ASSERT(list.front() == list[0]);
 		IZI_ASSERT(list.back() == list[size - 1]);
 		IZI_ASSERT(clist.front() == list[0]);
 		IZI_ASSERT(clist.back() == list[size - 1]);
+
 		cout << "Termine"
 			<< endl;
 		cout << "Fontionalites testees :" << endl
 			<< "Methode front()" << endl
 			<< "Methode back()" << endl;
 
-		char c;
-		cin >> c;
+
 	}//FrontBackTest()
 
 	void PushPopFrontBackTest(){
 		CList<int>list(size, value);
 		list.push_front(value1);
+
 		IZI_ASSERT(list[0] == value1 && list[1] == value);
+
 		list.pop_front();
+
 		IZI_ASSERT(list[0] == value);
+
 		list.push_back(value1);
+
 		IZI_ASSERT(list[size-1] == value1 && list[size-2] == value);
+
 		list.pop_back();
+
 		IZI_ASSERT(list[size-1] == value);
 	}//PushPopFrontBackTest
 
 	void SwapTest(){
+		bool swapped = true;
 		CList<int>list;
 		CList<int>list1(size, value);
 		CList<int>list2 = list1;
 		list.swap(list1);
-		i = rand() % size;
-		IZI_ASSERT(list[i] == list2[i]);
+		
+		for (unsigned i(0); swapped && i < size; ++i)
+			swapped = list[i] == list2[i];
+
+		IZI_ASSERT(swapped);
 	}//SwapTest()
 
 	void ResizeTest(){
@@ -212,15 +248,16 @@ namespace {
 		IZI_ASSERT(list[size - 4] == value1);
 	}//InsertTest()
 
-	//void EraseTest(){
-	//	CList<int>list;
-	//	for (unsigned n(0); n < size; ++n) { list.push_back(n); }
-	//	list.edit();
-	//	list.erase(size - 3);
-	//	IZI_ASSERT(list[size - 4] == size - 2);
-	//}//EraseTest()
+	void EraseTest(){
+		CList<int>list;
+		for (unsigned n(0); n < size; ++n) { list.push_back(n); }
+		list.edit();
+		list.erase(3);
+		IZI_ASSERT(list[3] == 4);
+	}//EraseTest()
 
 	void UniqueTest(){
+		bool unique = true;
 		CList<int>list;
 		for (unsigned n (0); n < size; ++n) { list.push_back (n);list.push_back(n); }
 		list.edit();
@@ -228,22 +265,31 @@ namespace {
 		list.unique();
 		list.edit();
 		cout << endl;
-		i = rand() % (list.size() - 2) + 2;
-		IZI_ASSERT(list[i - 1] != list[i - 2] && list[i - 1] != list[i]);
+
+		for (unsigned i(2); unique && i < list.size(); ++i)
+			unique = list[i - 1] != list[i - 2] && list[i - 1] != list[i];
+
+		IZI_ASSERT(unique);
 	}//UniqueTest()
 
 	void SortTest(){
+		bool sorted = true;
 		CList<int>list;
 		for (unsigned n = 0; n < 10; ++n)
 			list.push_back(rand() % 10);
 		list.edit();
 		list.sort();
 		list.edit();
-		i = rand() % 9;
-			IZI_ASSERT(list[i] >= list[i + 1]);
+
+
+		for (unsigned i(0); sorted && i < list.size(); ++i)
+			sorted = list[i] >= list[i + 1];
+
+		IZI_ASSERT(sorted);
 	}//SortTest()
 
 	void MergeTest(){
+		bool merged = true;
 		CList<int>list1; 
 		CList<int>list2;
 		for (unsigned n = 0; n < 10; ++n) 
@@ -257,11 +303,15 @@ namespace {
 		list2.edit();
 		list1.merge(list2);
 		list1.edit();
-		i = rand() % 19;
-		IZI_ASSERT(list1[i] >= list1[i + 1]);
+
+		for (unsigned i(0); merged && i < list1.size(); ++i)
+			merged = list1[i] >= list1[i + 1];
+	
+		IZI_ASSERT(merged);
 	}//MergeTest()
 
 	void ReverseTest(){
+		bool reversed = true;
 		CList<int>list;
 		CList<int>wlist;
 		for (unsigned n = 0; n < 10; ++n)
@@ -270,10 +320,35 @@ namespace {
 		list.edit();
 		list.reverse();
 		list.edit();
-		i = rand() % 10;
-		IZI_ASSERT(list[i] == wlist[9 - i]);
+
+		for (unsigned i(0); reversed && i < list.size(); ++i)
+			reversed = list[i] == wlist[9 - i];
+
+		IZI_ASSERT(reversed);
 	}//ReverseTest()
 
+
+	void TestAll(){
+		ConstructorTest();
+		EmptyTest();
+		Size_tTest();
+		FrontBackTest();
+		PushPopFrontBackTest();
+		SwapTest();
+		ResizeTest();
+		ClearTest();
+		RemoveTest();
+		InsertTest();
+		EraseTest();
+		UniqueTest();
+		SortTest();
+		MergeTest();
+		ReverseTest();
+
+		char c;
+		cin >> c;
+
+	}//TestAll()
 
 	
 
@@ -281,23 +356,7 @@ namespace {
 
 int main(){
 
-	ConstructorTest();
-	EmptyTest();
-	Size_tTest();
-	FrontBackTest ();
-	PushPopFrontBackTest ();
-	SwapTest ();
-	ResizeTest ();
-	ClearTest ();
-	RemoveTest ();
-	InsertTest ();
-	EraseTest ();
-	UniqueTest ();
-	SortTest ();
-	MergeTest ();
-	ReverseTest ();
+	TestAll();
 
-	char Char;
-	std::cin >> Char;
 	return 0;
 }
