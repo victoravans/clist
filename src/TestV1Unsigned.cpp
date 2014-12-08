@@ -1,10 +1,4 @@
 #include "TestV1Unsigned.h"
-#include <iostream>
-#include <stdlib.h>
-#include <time.h>
-#include "IziAssert.h"
-#include "CList.h"
-
 
 using namespace std;
 using namespace nsSdD;
@@ -184,7 +178,7 @@ namespace nsSdD{
 
 	void PushPopFrontBackTest(){
 		CList<unsigned>list;
-		for (unsigned i = 0; i < 10; list.push_back(i));
+		for (unsigned i = 0; i < 10; list.push_back(i++));
 		list.push_front(99);
 
 		IZI_ASSERT(list.front() == 99 && list.front().GetNext() == 0);

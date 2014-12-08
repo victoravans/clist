@@ -1,9 +1,4 @@
 #include "TestV1String.h"
-#include <iostream>
-#include <stdlib.h>
-#include <time.h>
-#include "IziAssert.h"
-#include "CList.h"
 
 
 using namespace std;
@@ -337,7 +332,7 @@ namespace nsSdD{
 
 		for (unsigned i(0); merged && i < list1.size() - 1; ++i)
 			merged = (list1[i].value() <= list1[i + 1].value());
-		merged = (list1.size() == 20);
+		merged = (list1.size() == 8);
 		IZI_ASSERT(merged);
 	}//MergeTest()
 
@@ -364,19 +359,33 @@ namespace nsSdD{
 	void TestString(){
 
 		StringConstructorTest();
+		sleep(1);
 		StringEmptyTest();
+		sleep(1);
 		StringSize_tTest();
+		sleep(1);
 		StringFrontBackTest();
+		sleep(1);
 		StringPushPopFrontBackTest();
+		sleep(1);
 		StringSwapTest();
+		sleep(1);
 		StringResizeTest();
+		sleep(1);
 		StringClearTest();
+		sleep(1);
 		StringRemoveTest();
+		sleep(1);
 		StringInsertTest();
+		sleep(1);
 		StringEraseTest();
+		sleep(1);
 		StringUniqueTest();
+		sleep(1);
 		StringSortTest();
+		sleep(1);
 		StringMergeTest();
+		sleep(1);
 		StringReverseTest();
 
 		char c;

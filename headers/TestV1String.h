@@ -3,7 +3,7 @@
 #include <time.h>
 #include "IziAssert.h"
 #include "CList.h"
-
+#include <unistd.h>
 
 using namespace std;
 using namespace nsSdD;
