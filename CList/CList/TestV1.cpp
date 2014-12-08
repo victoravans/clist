@@ -235,23 +235,23 @@ namespace {
 		list1.push_back(value1);
 		list1.push_back(value1 - 5);
 		list1.push_front(value1);
-		list1.edit();
+		list1.edit(true);
 		list1.remove(value);
-		list1.edit();
+		list1.edit(true);
 	}//RemoveTest()
 
 	void InsertTest(){
 		CList<int>list(size, value);
-		list.edit();
+		list.edit(true);
 		list.insert(size - 3, value1);
-		list.edit();
+		list.edit(true);
 		IZI_ASSERT(list[size - 4] == value1);
 	}//InsertTest()
 
 	void EraseTest(){
 		CList<int>list;
 		for (unsigned n(0); n < size; ++n) { list.push_back(n); }
-		list.edit();
+		list.edit(true);
 		list.erase(3);
 		IZI_ASSERT(list[3] == 4);
 	}//EraseTest()
@@ -260,10 +260,10 @@ namespace {
 		bool unique = true;
 		CList<int>list;
 		for (unsigned n (0); n < size; ++n) { list.push_back (n);list.push_back(n); }
-		list.edit();
+		list.edit(true);
 		cout << endl;
 		list.unique();
-		list.edit();
+		list.edit(true);
 		cout << endl;
 
 		for (unsigned i(2); unique && i < list.size(); ++i)
@@ -277,9 +277,9 @@ namespace {
 		CList<int>list;
 		for (unsigned n = 0; n < 10; ++n)
 			list.push_back(rand() % 10);
-		list.edit();
+		list.edit(true);
 		list.sort();
-		list.edit();
+		list.edit(true);
 
 
 		for (unsigned i(0); sorted && i < list.size(); ++i)
@@ -299,10 +299,10 @@ namespace {
 		}
 		list1.sort();
 		list2.sort();
-		list1.edit();
-		list2.edit();
+		list1.edit(true);
+		list2.edit(true);
 		list1.merge(list2);
-		list1.edit();
+		list1.edit(true);
 
 		for (unsigned i(0); merged && i < list1.size(); ++i)
 			merged = list1[i] >= list1[i + 1];
@@ -317,9 +317,9 @@ namespace {
 		for (unsigned n = 0; n < 10; ++n)
 			list.push_back(rand() % 10);
 		wlist = list;
-		list.edit();
+		list.edit(true);
 		list.reverse();
-		list.edit();
+		list.edit(true);
 
 		for (unsigned i(0); reversed && i < list.size(); ++i)
 			reversed = list[i] == wlist[9 - i];
