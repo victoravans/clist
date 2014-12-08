@@ -155,6 +155,7 @@ namespace nsSdD
 			* \return m_Info du CNode
 			*/
 			T& value();
+			const T& value() const;
 		};
 
 		std::shared_ptr <CNode> m_Head;	/*!< Pointeur vers la sentinelle de tête*/

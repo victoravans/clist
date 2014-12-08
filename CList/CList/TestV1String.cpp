@@ -182,7 +182,7 @@ namespace nsSdD{
 	}//FrontBackTest()
 
 	void PushPopFrontBackTest(){
-		CList<unsigned>list;
+		CList<string>list;
 		for (unsigned i = 0; i < 10; list.push_back(i));
 		list.push_front(99);
 

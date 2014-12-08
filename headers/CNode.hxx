@@ -58,3 +58,9 @@ typename T& CNODE::value()
 {
 	return m_Info;
 }
+
+template <class T>
+const typename T& CNODE::value() const
+{
+	return m_Info;
+}
