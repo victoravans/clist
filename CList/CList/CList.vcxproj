@@ -83,6 +83,8 @@
     <ClCompile Include="..\..\src\hichemTestUnsigned.cxx" />
     <ClCompile Include="..\..\src\main.cxx" />
     <ClCompile Include="TestV1.cpp" />
+    <ClCompile Include="TestV1String.cpp" />
+    <ClCompile Include="TestV1Unsigned.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\headers\CList.h" />
@@ -90,6 +92,8 @@
     <ClInclude Include="..\..\headers\CNode.hxx" />
     <ClInclude Include="..\..\headers\hichemTestUnsigned.h" />
     <ClInclude Include="..\..\headers\IziAssert.h" />
+    <ClInclude Include="TestV1String.h" />
+    <ClInclude Include="TestV1Unsigned.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

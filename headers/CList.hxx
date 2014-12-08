@@ -379,6 +379,6 @@ template <class T>
 void CLIST::edit (bool jumpLines /* = false */) const
 {
 	for (std::shared_ptr <CNode> i = m_Head->m_Next; i != m_Tail; i = i->m_Next)
-		std::cout << i->m_Info << "; "
+		std::cout << i->m_Info << "; ";
 	if (jumpLines) std::cout << std::endl;
 }

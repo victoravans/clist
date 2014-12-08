@@ -147,6 +147,14 @@ namespace nsSdD
 			* \return
 			*/
 			operator T() const;
+			/**
+			* \brief Récupère l'info du CNode
+			*
+			* Renvoie une référence vers l'info contenue dans le CNode
+			*
+			* \return m_Info du CNode
+			*/
+			T& value();
 		};
 
 		std::shared_ptr <CNode> m_Head;	/*!< Pointeur vers la sentinelle de tête*/
@@ -222,7 +230,7 @@ namespace nsSdD
 		*
 		* \return La taille de la liste
 		*/
-		size_t size () const;		//returns the number of elements of the list
+		size_t size () const;
 		/**
 		* \brief Renvoie le premier élément
 		*
@@ -231,7 +239,7 @@ namespace nsSdD
 		*
 		* \return La référence vers le premier élément de la liste
 		*/
-		CNode& front ();		//reference to the first element
+		CNode& front ();
 		/**
 		* \brief Renvoie le premier élément
 		*
@@ -242,7 +250,7 @@ namespace nsSdD
 		*
 		* \return La référence constante vers le premier élément de la liste
 		*/
-		const CNode& front () const;		//const reference to the first element
+		const CNode& front () const;
 		/**
 		* \brief Renvoie le dernier élément
 		*
@@ -251,7 +259,7 @@ namespace nsSdD
 		*
 		* \return La référence vers le dernier élément de la liste
 		*/
-		CNode& back ();				//reference to the last element
+		CNode& back ();
 		/**
 		* \brief Renvoie le dernier élément
 		*
@@ -262,7 +270,7 @@ namespace nsSdD
 		*
 		* \return La référence constante vers le dernier élément de la liste
 		*/
-		const CNode& back () const;	//const reference to the last element
+		const CNode& back () const;
 		/**
 		* \brief Renvoie l'élément situé à l'index voulu
 		*
@@ -294,7 +302,7 @@ namespace nsSdD
 		*
 		* \param val La valeur de l'élément à insérer
 		*/
-		void push_front (const T& val);		//inserts an element at the beginning of the list (after the head sentinel)
+		void push_front (const T& val);
 		/**
 		* \brief Rajoute un élément à la fin
 		*
@@ -302,19 +310,19 @@ namespace nsSdD
 		*
 		* \param val La valeur de l'élément à insérer
 		*/
-		void push_back (const T& val);		//inserts an element at the end of the list (before the tail sentinel)
+		void push_back (const T& val);
 		/**
 		* \brief Supprime le premier élément
 		*
 		* Le premier élément de la liste disparait. Sans effet si la liste est vide.
 		*/
-		void pop_front();	//deletes the first element of the list
+		void pop_front();
 		/**
 		* \brief Supprime le dernier élément
 		*
 		* Le dernier élément de la liste disparait. Sans effet si la liste est vide.
 		*/
-		void pop_back();	//deletes the last element of the list
+		void pop_back();
 		/**
 		* \brief Echange le contenu de la liste avec celle passée en paramètre
 		*
@@ -322,7 +330,7 @@ namespace nsSdD
 		*
 		* \param l La liste avec laquelle échanger le contenu
 		*/
-		void swap (CList& l);	//exchanges the content of the list with l's
+		void swap (CList& l);
 		/**
 		* \brief Redimensionne la liste
 		*
@@ -332,13 +340,13 @@ namespace nsSdD
 		* \param n La taille voulue pour la liste
 		* \param val La valeur des nouveaux éléments de la liste
 		*/
-		void resize (std::size_t n, T val = T());	//resizes the list to n elements. Delete or create cnodes
+		void resize (std::size_t n, T val = T());
 		/**
 		* \brief Efface toute la liste
 		*
 		* Tous les éléments de la liste sont supprimés, et la taille de la liste devient 0.
 		*/
-		void clear();	//sets list's size to 0
+		void clear();
 		/**
 		* \brief Supprime de la liste tous les éléments égaux à la valeur donnée
 		*
@@ -346,11 +354,11 @@ namespace nsSdD
 		*
 		* \param val La valeur des éléments à supprimer
 		*/
-		void remove (const T& val);	//removes list's elements of value val
+		void remove (const T& val);
 		/**
 		* \brief Insère un élément
 		*
-		* Recherche le premier élément de la liste correspondant à la position donnée en paramètre, et insère
+		* Recherche le premier élément de la liste correspondant à la valeur de position donné en paramètre, et insère
 		* la valeur donnée dans une nouvelle case avant celui-ci. Si aucun élément de la liste n'a une valeur
 		* égale à celle de la position, l'insertion échoue
 		*
@@ -396,7 +404,7 @@ namespace nsSdD
 		*
 		* Renverse l'ordre de la liste, le premier élément devenant le dernier, et ainsi de suite.
 		*/
-		void reverse();	//reverse the order of the elements in the list
+		void reverse();
 		/**
 		* \brief Affiche le contenu de la liste
 		*

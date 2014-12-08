@@ -52,3 +52,9 @@ typename CNODE::operator T() const
 {
 	return m_Info;
 }
+
+template <class T>
+typename T& CNODE::value()
+{
+	return m_Info;
+}
