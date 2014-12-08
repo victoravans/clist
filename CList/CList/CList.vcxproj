@@ -80,6 +80,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\hichemTestUnsigned.cxx" />
     <ClCompile Include="..\..\src\main.cxx" />
     <ClCompile Include="TestV1.cpp" />
   </ItemGroup>
@@ -87,6 +88,7 @@
     <ClInclude Include="..\..\headers\CList.h" />
     <ClInclude Include="..\..\headers\CList.hxx" />
     <ClInclude Include="..\..\headers\CNode.hxx" />
+    <ClInclude Include="..\..\headers\hichemTestUnsigned.h" />
     <ClInclude Include="..\..\headers\IziAssert.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

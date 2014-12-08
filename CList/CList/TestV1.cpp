@@ -163,9 +163,9 @@ namespace {
 		list.pop_front();
 		IZI_ASSERT(list[0] == value);
 		list.push_back(value1);
-		IZI_ASSERT(list[size] == value1 && list[size-1] == value);
+		IZI_ASSERT(list[size-1] == value1 && list[size-2] == value);
 		list.pop_back();
-		IZI_ASSERT(list[size] == value);
+		IZI_ASSERT(list[size-1] == value);
 	}//PushPopFrontBackTest
 
 	void SwapTest(){
@@ -209,24 +209,26 @@ namespace {
 		list.edit();
 		list.insert(size - 3, value1);
 		list.edit();
-		IZI_ASSERT(list[size - 3] == value1);
+		IZI_ASSERT(list[size - 4] == value1);
 	}//InsertTest()
 
-	void EraseTest(){
-		CList<int>list(size);
-		for (unsigned n(0); n < size; ++n) { list.insert(n, n); }
-		list.edit();
-		list.erase(size - 3);
-		IZI_ASSERT(list[size - 3] == size - 2);
-	}//EraseTest()
+	//void EraseTest(){
+	//	CList<int>list;
+	//	for (unsigned n(0); n < size; ++n) { list.push_back(n); }
+	//	list.edit();
+	//	list.erase(size - 3);
+	//	IZI_ASSERT(list[size - 4] == size - 2);
+	//}//EraseTest()
 
 	void UniqueTest(){
-		CList<int>list(size*2);
-		for (unsigned n(0); n < size*2; ++n) { list.insert(n, n/2); }
+		CList<int>list;
+		for (unsigned n (0); n < size; ++n) { list.push_back (n);list.push_back(n); }
 		list.edit();
+		cout << endl;
 		list.unique();
 		list.edit();
-		i = rand() % size*2 + 2;
+		cout << endl;
+		i = rand() % (list.size() - 2) + 2;
 		IZI_ASSERT(list[i - 1] != list[i - 2] && list[i - 1] != list[i]);
 	}//UniqueTest()
 
@@ -244,10 +246,11 @@ namespace {
 	void MergeTest(){
 		CList<int>list1; 
 		CList<int>list2;
-		for (unsigned n = 0; n < 10; ++n) {
+		for (unsigned n = 0; n < 10; ++n) 
+		{
 			list1.push_back(rand() % 10);
 			list2.push_back(rand() % 10);
-		}//for()
+		}
 		list1.sort();
 		list2.sort();
 		list1.edit();
@@ -277,18 +280,22 @@ namespace {
 }//namespace
 
 int main(){
-	CList <int> a;
-	for (unsigned i = 0; i < 10; ++i)
-		a.push_back (rand () % 10);
-	a.edit ();
-	a.clear ();
-	cout << endl;
-	a.edit ();
 
-	//ConstructorTest();
-	//EmptyTest();
-	//Size_tTest();
-	//FrontBackTest ();
+	ConstructorTest();
+	EmptyTest();
+	Size_tTest();
+	FrontBackTest ();
+	PushPopFrontBackTest ();
+	SwapTest ();
+	ResizeTest ();
+	ClearTest ();
+	RemoveTest ();
+	InsertTest ();
+	EraseTest ();
+	UniqueTest ();
+	SortTest ();
+	MergeTest ();
+	ReverseTest ();
 
 	char Char;
 	std::cin >> Char;
