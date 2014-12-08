@@ -222,10 +222,10 @@ void CLIST::clear()
 template <class T>
 void CLIST::splice (iterator position, CList& x)
 {
-	iterator Iter = x.end ();
-	--Iter = ++position;
-	position--.m_Elmt->m_Previous = Iter.m_Elmt;
-	x.begin ().m_Elmt->m_Previous = position.m_Elmt;
+	x.end ().m_Elmt->m_Previous->m_Next = position.m_Elmt;
+	position.m_Elmt->m_Previous->m_Next = x.begin ().m_Elmt;
+	x.begin ().m_Elmt->m_Previous = position.m_Elmt->m_Previous;
+	position.m_Elmt->m_Previous = x.end ().m_Elmt->m_Previous;
 }
 
 template <class T>
