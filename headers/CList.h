@@ -25,34 +25,33 @@ namespace nsSdD
 {
 	template <class T>
 	/*! \class CList 
-	* \brief Classe imitant std::list (version 1)
+	* \brief Classe imitant std::list (version 2)
 	*
-	* La classe CList en version 1, imitant le comportement de list
-	* de la std sans utiliser d'itérateurs et en utilisant la classe privée CNode 
-	* en version 1, contenant l'information à stocker de type T
+	* La classe CList en version 2, imitant le comportement de list
+	* de la std en utilisant des itérateurs et en utilisant la classe privée CNode 
+	* en version 2, contenant l'information à stocker de type T
 	* (le type utilisé par la liste), et deux shared_ptr vers le CNode suivant 
 	* et le CNode précédent.
 	*
-	* Pour se déplacer dans la liste,
-	* on utilise donc GetNext, HasNext, GetPrevious et HasPrevious sur les 
-	* référence renvoyées par l'opérateur [], front () et back (). Ces
-	* références sont en fait des CNode, mais se comportent comme le type
-	* avec lequel la liste a été initialisée, grâce à l'opérateur () qui
-	* permet une conversion implicite. En cas de besoin, par ex pour l'appel à une
-	* fonction explicit, l'utilisateurs peut utiliser la fonction GetInfo()
-	* sur le CNode pour récupérer la donnée membre m_Info.
+	* L'ajout d'une méthode edit() permet d'afficher les valeurs de la liste, pour
+	* des raisons de facilités de débuguage.
+
+	* Pour se déplacer dans la liste, on crée un itérateur avec begin() ou end(),
+	* et on le décremente ou incrémente. 
 	*
 	* C'est une liste doublement chaînée afin de permettre le déplacement dans les
 	* deux sens, ce qui est à nos yeux trop pratique pour s'en dispenser. L'utilisation
-	* D'une double sentinelle a permit l'implémentation des fonctions membres sans cas
+	* d'une double sentinelle a permit l'implémentation des fonctions membres sans cas
 	* particulier à gérer lors du parcours de la liste, ce qui se traduit par un gain de 
 	* performance dans les algorithmes.
 	*
-	* La plupart des fonctions de la std::list ont été implémentées, exceptées celles
-	* nécessitant l'utilisation d'itérateurs, qui seront rajoutées dans la version 2.
-	* La majorité des algorithmes utilisés dans les fonctions seraient plus efficaces
-	* et surtout lisibles s'ils fonctionnaient avec des itérateurs, c'est pourquoi
-	* beaucoup de code sera réécrit dans le version 2.
+	* Presque toutes les fonctions de la std::list ont été implémentées. Celles nécessitant
+	* l'utilisation de const_iterator ont soit été ignorées (cbegin, cend), ou ajustées (les emplace)
+	* car leur implémentation à été jugée trop difficile.
+	*
+	* Beaucoup de méthodes modifient directement les shared_ptr des m_Elmt des itérateurs, pour
+	* cause d'efficacité de calcul. Toutes les boucles de la version 1 utilisant des shared_ptr
+	* ont été transformées en boucles à itérateurs.
 	*/
 	class CList
 	{
@@ -73,82 +72,27 @@ namespace nsSdD
 			/**
 			* \brief Constructeur de CNode
 			*
-			* 
 			*/
 			CNode (const T & val = T (), std::shared_ptr <CNode> suivant = nullptr, std::shared_ptr <CNode> precedent = nullptr);
-			/**
-			* \brief Vérifie si l'élément est le dernier de la liste
-			*
-			* Si l'élément suivant est la sentinelle de queue, l'élément courant est le dernier de la liste et la fonction renvoie
-			* faux, vrai sinon.
-			*
-			* \return true si le CNode n'est pas le dernier de la liste, false sinon
-			*/
-			bool HasNext () const;
-			/**
-			* \brief Vérifie si l'élément est le premier de la liste
-			*
-			* Si l'élément suivant est la sentinelle de tête, l'élément courant est le premier de la liste et la fonction renvoie
-			* faux, vrai sinon.
-			*
-			* \return true si le CNode n'est pas le premier de la liste, false sinon
-			*/
-			bool HasPrevious () const;
-			/**
-			* \brief Récupère l'élément suivant de la liste
-			*
-			* Renvoie une référence vers le prochain élément de la liste, et si l'élément courant est le dernier, renvoie l'élément
-			* courant.
-			*
-			* \return Référence vers le prochain élément de la liste
-			*/
-			CNode& GetNext ();
-			/**
-			* \brief Récupère l'élément suivant de la liste
-			*
-			* Cette fonction est appelée à la place de l'autre GetNext () si la liste est constante.
-			*
-			* Renvoie une référence constante vers le prochain élément de la liste, et si l'élément courant est le dernier, 
-			* renvoie l'élément courant.
-			*
-			* \return Référence constante vers le prochain élément de la liste
-			*/
-			const CNode& GetNext () const;
-			/**
-			* \brief Récupère l'élément précédent de la liste
-			*
-			* Renvoie une référence vers l'élément précédent de la liste, et si l'élément courant est le
-			* premier, renvoie l'élément courant.
-			*
-			* \return Référence vers l'élément précédent de la liste
-			*/
-			CNode& GetPrevious ();
-			/**
-			* \brief Récupère l'élément précédent de la liste
-			*
-			* Cette fonction est appelée à la place de l'autre GetPrevious () si la liste est constante.
-			*
-			* Renvoie une référence constante vers l'élément précédent de la liste, et si l'élément courant est le
-			* premier, renvoie l'élément courant.
-			*
-			* \return Référence constante vers l'élément précédent de la liste
-			*/
-			const CNode& GetPrevious () const;
-			/**
-			* \brief Conversion implicite du CNode en T
-			*
-			* Permet à l'utilisateur de récupérer l'information contenue dans le CNode sans faire de 
-			* conversion explicite.
-			*
-			* \return
-			*/
-			operator T() const;
 		};
 		std::shared_ptr <CNode> m_Head;	/*!< Pointeur vers la sentinelle de tête*/
 		std::shared_ptr <CNode> m_Tail;	/*!< Pointeur vers la sentinelle de queue*/
 
 	public:
-		class const_iterator;
+		/*! \class iterator
+		* \brief Classe d'itérateurs de CList <T>
+		*
+		* La classe qui imite le comportement des itérateurs sur une std::list, ici sur une CList.
+		* L'itérateur possède un pointeur vers son CNode, et c'est ce dernier qui contient les pointeurs
+		* vers les cases d'avant et d'après.
+		*
+		* C'est une classe d'itérateurs bidirectionnels, ce qui signifie qu'ils peuvent se déplacer dans
+		* vers le début et vers la fin de la liste, une case par une case grâce aux opérateurs ++ et --.
+		* 
+		* L'implémentation d'itérateurs rend l'utilisation de la CList beaucoup plus simple pour l'utilisateur,
+		* car cela permet d'utiliser toutes les fonctions génériques de la std utilisant des itérateurs.
+		* De plus, le fonctionnement interne des méthodes de CList est parfois optimisé, et plus lisible.
+		*/
 		class iterator
 		{
 			friend CList;
@@ -156,7 +100,6 @@ namespace nsSdD
 			std::shared_ptr <CNode> m_Elmt;
 		public:
 			iterator (const iterator & i);
-			iterator (const const_iterator & i);
 			iterator (std::shared_ptr <CNode> Elmt = nullptr);
 			iterator operator= (const iterator & i);
 			bool operator== (const iterator & i) const;
@@ -202,7 +145,7 @@ namespace nsSdD
 		*/
 		CList (const CList& l);
 		/**
-		* \brief Transforme la CList en une copie de celle passée en paramètre.
+		* \brief Transforme la CList en une copie de celle passée en paramètre
 		*
 		* Remplace le contenu actuel de la liste, modifiant sa taille en celle de la liste à copier.
 		* Le contenu actuel de la liste est soit réassigné, soit supprimé. Chaque élément est copié,
@@ -212,9 +155,41 @@ namespace nsSdD
 		* \return La liste modifiée
 		*/
 		CList& operator= (const CList& l);
+		/**
+		* \brief Renvoie un itérateur vers le premier élément de la liste
+		*
+		* Génère un iterator de CList<T> pointant vers le premier élément qui permet de se déplacer dans la liste comme un itérateur classique
+		*
+		* \return Un itérateur pointant au début de la liste
+		*/
 		iterator begin ();
+		/**
+		* \brief Renvoie un itérateur vers le premier élément de la liste
+		*
+		* Cette fonction est appelée à la place de l'autre begin () si la liste est constante.
+		*
+		* Génère un iterator de CList<T> pointant vers le premier élément qui permet de se déplacer dans la liste comme un itérateur classique
+		*
+		* \return Un itérateur pointant au début de la liste
+		*/
 		const iterator begin () const;
+		/**
+		* \brief Renvoie un itérateur vers la case après le dernier élément de la liste
+		*
+		* Génère un iterator de CList<T> pointant vers la case après le dernier élément qui permet de se déplacer dans la liste comme un itérateur classique
+		*
+		* \return Un itérateur pointant au début de la liste
+		*/
 		iterator end ();
+		/**
+		* \brief Renvoie un itérateur vers la case après le dernier élément de la liste
+		*
+		* Cette fonction est appelée à la place de l'autre begin () si la liste est constante.
+		*
+		* Génère un iterator de CList<T> pointant vers la case après le dernier élément qui permet de se déplacer dans la liste comme un itérateur classique
+		*
+		* \return Un itérateur pointant au début de la liste
+		*/
 		const iterator end () const;
 		/**
 		* \brief Redimensionne la liste et remplace son contenu par une valeur
@@ -229,7 +204,7 @@ namespace nsSdD
 		/**
 		* \brief Vérifie si la liste est vide
 		*
-		* Si la sentinelle de tête pointe directement vers la sentinelle de queue, la list est vide,
+		* Si la sentinelle de tête pointe directement vers la sentinelle de queue, la liste est vide,
 		* sinon elle ne l'est pas.
 		*
 		* \return true si la liste est vide, false sinon
@@ -244,41 +219,41 @@ namespace nsSdD
 		* \return La taille de la liste
 		*/
 		size_t size () const;
-		/** VERIFIER
+		/**
 		* \brief Renvoie le premier élément
 		*
-		* Renvoie la référence du CNode du premier élément de la liste. Sur une liste vide, cette fonction peut avoir
+		* Renvoie la référence du premier élément de la liste. Sur une liste vide, cette fonction peut avoir
 		* un comportement indéfini sur le déroulement du programme car elle renvoie la sentinelle de queue.
 		*
 		* \return La référence vers le premier élément de la liste
 		*/
-		T& front ();		//reference to the first element
-		/** VERIFIER
+		T& front ();
+		/**
 		* \brief Renvoie le premier élément
 		*
 		* Cette fonction est appelée à la place de l'autre front () si la liste est constante.
 		*
-		* Renvoie la référence constante du CNode du premier élément de la liste. Sur une liste vide, cette fonction peut avoir
+		* Renvoie la référence constante du premier élément de la liste. Sur une liste vide, cette fonction peut avoir
 		* un comportement indéfini sur le déroulement du programme car elle renvoie la sentinelle de queue.
 		*
 		* \return La référence constante vers le premier élément de la liste
 		*/
-		const T& front () const;		//const reference to the first element
-		/** VERIFIER
+		const T& front () const;
+		/**
 		* \brief Renvoie le dernier élément
 		*
-		* Renvoie la référence du CNode du dernier élément de la liste. Sur une liste vide, cette fonction peut avoir
+		* Renvoie la référence dernier élément de la liste. Sur une liste vide, cette fonction peut avoir
 		* un comportement indéfini sur le déroulement du programme car elle renvoie la sentinelle de tête.
 		*
 		* \return La référence vers le dernier élément de la liste
 		*/
-		T& back ();				//reference to the last element
-		/** VERIFIER
+		T& back ();
+		/**
 		* \brief Renvoie le dernier élément
 		*
 		* Cette fonction est appelée à la place de l'autre back () si la liste est constante.
 		*
-		* Renvoie la référence constante du CNode du dernier élément de la liste. Sur une liste vide, cette fonction peut avoir
+		* Renvoie la référence constantedu dernier élément de la liste. Sur une liste vide, cette fonction peut avoir
 		* un comportement indéfini sur le déroulement du programme car elle renvoie la sentinelle de tête.
 		*
 		* \return La référence constante vers le dernier élément de la liste
@@ -291,7 +266,17 @@ namespace nsSdD
 		*
 		* \param val La valeur de l'élément à insérer
 		*/
-		void push_front (const T& val);		//inserts an element at the beginning of the list (after the head sentinel)
+		void push_front (const T& val);	
+		/**
+		* \brief Rajoute un élément au début par ses arguments de constructeur
+		*
+		* Un élément est créé au début de la liste en envoyant comme paramètre les arguments nécessaires à un constructeur
+		* d'un objet de type T. 
+		*
+		* \param args Les arguments de construction de l'objet à insérer
+		*/
+		template <class... Args>
+		void emplace_front (Args&&... args);
 		/**
 		* \brief Rajoute un élément à la fin
 		*
@@ -299,16 +284,22 @@ namespace nsSdD
 		*
 		* \param val La valeur de l'élément à insérer
 		*/
+		void push_back (const T& val);
+		/**
+		* \brief Rajoute un élément à la fin par ses arguments de constructeur
+		*
+		* Un élément est créé à la fin de la liste en envoyant comme paramètre les arguments nécessaires à un constructeur
+		* d'un objet de type T.
+		*
+		* \param args Les arguments de construction de l'objet à insérer
+		*/
 		template <class... Args>
-		void emplace_front (Args&&... args);
-		void push_back (const T& val);		//inserts an element at the end of the list (before the tail sentinel)
+		void emplace_back (Args&&... args);
 		/**
 		* \brief Supprime le premier élément
 		*
 		* Le premier élément de la liste disparait. Sans effet si la liste est vide.
 		*/
-		template <class... Args>
-		void emplace_back (Args&&... args);
 		void pop_front();	//deletes the first element of the list
 		/**
 		* \brief Supprime le dernier élément
@@ -341,31 +332,104 @@ namespace nsSdD
 		*/
 		void clear();	//sets list's size to 0
 		/**
+		* \brief Transfère une liste dans la liste à l'emplacement indiqué
+		*
+		* Tous les éléments de la liste x sont insérés avant l'élément pointé par position.
+		*
+		* \param position Itérateur indiquant où doit se faire l'insertion
+		* \param x la liste à vider et insérer
+		*/
+		void splice (iterator position, CList& x);
+		/**
+		* \brief Transfère un élément d'une liste dans la liste à l'emplacement indiqué
+		*
+		* L'élément de x pointé par l'itérateur i est inséré dans la liste avant l'élément pointé par position.
+		*
+		* \param position Itérateur indiquant où doit se faire l'insertion
+		* \param x Liste dans laquelle prendre l'élément
+		* \param i Itérateur indiquant quel élément on doit bouger
+		*/
+		void splice (iterator position, CList& x, iterator i);
+		/**
+		* \brief Transfère une partie d'une liste dans la liste à l'emplacement indiqué
+		*
+		* Les éléments de la liste x compris entre first et last, first inclus et last exclu, sont transférés dans la liste
+		* courante, avant l'élément pointé par position.
+		*
+		* \param position Itérateur indiquant où doit se faire l'insertion
+		* \param x Liste dans laquelle prendre les éléments
+		* \param first Itérateur indiquant le début de la chaîne d'élément à transférer
+		* \param first Itérateur indiquant le la fin de la chaîne d'élément à transférer
+		*/
+		void splice (iterator position, CList& x, iterator first, iterator last);
+		/**
 		* \brief Supprime de la liste tous les éléments égaux à la valeur donnée
 		*
 		* Tous les éléments de la liste dont l'information est égale à celle passée en paramètre sont supprimés.
 		*
 		* \param val La valeur des éléments à supprimer
 		*/
-		void splice (iterator position, CList& x);
-		void splice (iterator position, CList& x, iterator i);
-		void splice (iterator position, CList& x, iterator first, iterator last);
 		void remove (const T& val);
+		/**
+		* \brief Insère dans la liste un élément à un endroit indiqué
+		*
+		* Insère l'élément val avant l'élément pointé par position.
+		*
+		* \param position La position où insérer val
+		* \param val L'élément à insérer
+		* \return Un iterator pointant vers l'élément inséré
+		*/
 		iterator insert (iterator position, const T& val);
+		/**
+		* \brief Insère des éléments dans la liste à un endroit indiqué
+		*
+		* Insère n éléments de valeur val avant l'élément pointé par position.
+		*
+		* \param position La position ou insérer les éléments
+		* \param n Le nombre d'éléments à insérer
+		* \param val La valeur des éléments à insérer
+		*/
 		void insert (iterator position, size_t n, const T& val);
 		template <class InputIterator>
+		/**
+		* \brief Rajoute un élément à l'endroit indiqué par ses arguments de constructeur
+		*
+		* Un élément est créé dans la liste à l'endroit indiqué par position en envoyant comme 
+		* paramètre les arguments nécessaires à un constructeur d'un objet de type T.
+		*
+		* \param position La position ou insérer l'élément
+		* \param args Les arguments de construction de l'objet à insérer
+		*/
 		void insert (iterator position, InputIterator first, InputIterator last);
 		template <class... Args>
+		/**
+		* \brief Insère des éléments dans la liste à un endroit indiqué
+		*
+		* Insère les éléments compris entre les itérateurs first et last, first inclus et last exclu,
+		* dans la liste avant l'élément pointé par position. Les éléments sont copiés et donc la liste
+		* pointée par first et last est intouchée.
+		*
+		* \param position La position ou insérer les éléments
+		* \param first L'itérateur vers le premier élément à insérer
+		* \param last L'itérateur vers la casé après le dernier élément à insérer
+		*/
 		iterator emplace (const_iterator position, Args&&... args);
 		/**
-		* \brief Supprime le premier élément égal à la valeur donnée
+		* \brief Supprime l'élément à la case indiquée
 		*
-		* Supprime de la liste la première case rencontrée, à partir du début, dont l'information est égale à 
-		* celle passée en paramètre.
+		* Supprime de la liste l'élément pointé par l'itérateur position.
 		*
-		* \param position La valeur de l'élément à supprimer
+		* \param position L'itérateur pointant vers l'élément à supprimer
 		*/
 		iterator erase (iterator position);
+		/**
+		* \brief Supprime une suite d'éléments entre les cases indiquées
+		*
+		* Supprime de la liste tous les éléments inclus entre first et last, first inclus et last exclu.
+		*
+		* \param first L'itérateur pointant vers le premier des éléments à supprimer
+		* \param last L'itérateur pointant vers la case après le dernier élément à supprimer
+		*/
 		iterator erase (iterator first, iterator last);
 		/**
 		* \brief Supprime les doublons qui se suivent

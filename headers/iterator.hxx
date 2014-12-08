@@ -7,14 +7,11 @@ ITER::iterator (const const_iterator & i) :m_Elmt (i.m_Elmt) {}
 
 template <class T>
 ITER::iterator (std::shared_ptr <typename CLIST::CNode> Elmt /*= nullptr*/)
-	:m_Elmt (Elmt)
-{
-}
+	:m_Elmt (Elmt) {}
 
 template <class T>
 ITER::iterator (const iterator & i)
-	: m_Elmt (i.m_Elmt)
-{}
+	: m_Elmt (i.m_Elmt) {}
 
 template <class T>
 typename ITER ITER::operator= (const iterator & i)

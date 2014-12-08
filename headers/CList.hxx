@@ -231,15 +231,27 @@ void CLIST::splice (iterator position, CList& x)
 template <class T>
 void CLIST::splice (iterator position, CList& x, iterator i)
 {
-	insert (position, i.m_Elmt);
-	x.erase (i);
+	//couper i de x
+	i.m_Elmt->m_Previous->m_Next = i.m_Elmt->m_Next;
+	i.m_Elmt->m_Next->m_Previous = i.m_Elmt->m_Previous;
+	//mettre i dans this
+	i.m_Elmt->m_Previous = position.m_Elmt->m_Previous;
+	i.m_Elmt->m_Next = position.m_Elmt;
+	position.m_Elmt->m_Previous->m_Next = i.m_Elmt;
+	position.m_Elmt->m_Previous = i.m_Elmt;
 }
 
 template <class T>
 void CLIST::splice (iterator position, CList& x, iterator first, iterator last)
 {
-	insert (position, first, last);
-	x.erase (first, last);
+	//couper le fragment de x
+	first.m_Elmt->m_Previous->m_Next = last.m_Elmt->m_Next;
+	last.m_Elmt->m_Next->m_Previous = first.m_Elmt->m_Previous;
+	//mettre le fragment dans this
+	first.m_Elmt->m_Previous = position.m_Elmt->m_Previous;
+	last.m_Elmt->m_Next = position.m_Elmt;
+	position.m_Elmt->m_Previous->m_Next = first.m_Elmt;
+	position.m_Elmt->m_Previous = last.m_Elmt;
 }
 
 template <class T>
@@ -395,8 +407,7 @@ void CLIST::edit (bool jumpLines /* = false */) const
 	for (iterator i = begin (); i != end (); ++i)
 	{
 		std::cout << *i;
-		if (jumpLines) std::cout << std::endl;
 		else std::cout << "; ";
-		std::cout << std::flush;
 	}
+	if (jumpLines) std::cout << std::endl;
 }

@@ -17,8 +17,10 @@ int main ()
 		b.push_back (5);
 	}
 	const CList<int> c (a);
-	a.splice (a.begin(), b);
+	a.splice (--a.end(), b, b.begin(), ++b.begin());
 	a.edit ();
+	cout << endl;
+	b.edit ();
 
 
 
