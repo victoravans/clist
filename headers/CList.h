@@ -32,6 +32,9 @@ namespace nsSdD
 	* (le type utilisé par la liste), et deux shared_ptr vers le CNode suivant 
 	* et le CNode précédent.
 	*
+	* L'ajout d'une méthode edit() permet d'afficher les valeurs de la liste, pour
+	* des raisons de facilités de débuguage.
+	*
 	* Pour se déplacer dans la liste,
 	* on utilise donc GetNext, HasNext, GetPrevious et HasPrevious sur les 
 	* référence renvoyées par l'opérateur [], front () et back (). Ces
