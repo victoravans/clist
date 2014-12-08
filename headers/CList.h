@@ -148,13 +148,15 @@ namespace nsSdD
 		std::shared_ptr <CNode> m_Tail;	/*!< Pointeur vers la sentinelle de queue*/
 
 	public:
+		class const_iterator;
 		class iterator
 		{
-		friend CList;
+			friend CList;
 		private:
 			std::shared_ptr <CNode> m_Elmt;
 		public:
 			iterator (const iterator & i);
+			iterator (const const_iterator & i);
 			iterator (std::shared_ptr <CNode> Elmt = nullptr);
 			iterator operator= (const iterator & i);
 			bool operator== (const iterator & i) const;
@@ -167,7 +169,6 @@ namespace nsSdD
 			iterator operator++(int);
 			iterator& operator--();
 			iterator operator--(int);
-			void Verif () const;
 		};
 		/**
 		* \brief Constructeur par défaut de CList
@@ -355,7 +356,7 @@ namespace nsSdD
 		template <class InputIterator>
 		void insert (iterator position, InputIterator first, InputIterator last);
 		template <class... Args>
-		iterator emplace (iterator position, Args&&... args);
+		iterator emplace (const_iterator position, Args&&... args);
 		/**
 		* \brief Supprime le premier élément égal à la valeur donnée
 		*

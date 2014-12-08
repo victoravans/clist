@@ -3,6 +3,9 @@
 
 
 template <class T>
+ITER::iterator (const const_iterator & i) :m_Elmt (i.m_Elmt) {}
+
+template <class T>
 ITER::iterator (std::shared_ptr <typename CLIST::CNode> Elmt /*= nullptr*/)
 	:m_Elmt (Elmt)
 {
@@ -11,8 +14,7 @@ ITER::iterator (std::shared_ptr <typename CLIST::CNode> Elmt /*= nullptr*/)
 template <class T>
 ITER::iterator (const iterator & i)
 	: m_Elmt (i.m_Elmt)
-{
-}
+{}
 
 template <class T>
 typename ITER ITER::operator= (const iterator & i)
@@ -64,6 +66,7 @@ typename ITER& ITER::operator++()
 	m_Elmt = m_Elmt->m_Next;
 	return *this;
 }
+
 template <class T>
 typename ITER ITER::operator++(int)
 {
@@ -71,23 +74,18 @@ typename ITER ITER::operator++(int)
 	m_Elmt = m_Elmt->m_Next;
 	return Temp;
 }
+
 template <class T>
 typename ITER& ITER::operator--()
 {;
 	m_Elmt = m_Elmt->m_Previous;
 	return *this;
 }
+
 template <class T>
 typename ITER ITER::operator--(int)
 {
-	iterator Temp (this);
+	iterator Temp (*this);
 	m_Elmt = m_Elmt->m_Previous;
-	return *Temp;
-}
-template <class T>
-void ITER::Verif () const
-{
-	if (m_Elmt->m_Previous == nullptr) cout << "N ";
-	else cout << m_Elmt->m_Previous->m_Info << " ";
-	cout << m_Elmt->m_Info << " " << m_Elmt->m_Next->m_Info << " " << endl;
+	return Temp;
 }

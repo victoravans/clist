@@ -222,14 +222,24 @@ void CLIST::clear()
 template <class T>
 void CLIST::splice (iterator position, CList& x)
 {
-	insert (position, x.begin (), x.end ());
-	x.clear ();
+	iterator Iter = x.end ();
+	--Iter = ++position;
+	position--.m_Elmt->m_Previous = Iter.m_Elmt;
+	x.begin ().m_Elmt->m_Previous = position.m_Elmt;
 }
 
 template <class T>
 void CLIST::splice (iterator position, CList& x, iterator i)
 {
+	insert (position, i.m_Elmt);
+	x.erase (i);
+}
 
+template <class T>
+void CLIST::splice (iterator position, CList& x, iterator first, iterator last)
+{
+	insert (position, first, last);
+	x.erase (first, last);
 }
 
 template <class T>
@@ -271,7 +281,7 @@ void CLIST::insert (iterator position, InputIterator first, InputIterator last)
 
 template <class T>
 template <class... Args>
-typename CLIST::iterator CLIST::emplace (iterator position, Args&&... args)
+typename CLIST::iterator CLIST::emplace (const_iterator position, Args&&... args)
 {
 	position.m_Elmt->m_Previous->m_Next = make_shared <CNode> (T(args...), position.m_Elmt, position.m_Elmt->m_Previous);
 	position.m_Elmt->m_Previous = position.m_Elmt->m_Previous->m_Next;
