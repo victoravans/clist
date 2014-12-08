@@ -13,7 +13,7 @@
 
 #include <cstddef>		//size_t
 #include <memory>		//shared_ptr
-#include <ostream>		//ostream
+#include <iostream>		//cout
 
 /*! \namespace nsSdD
  *
@@ -70,9 +70,9 @@ namespace nsSdD
 		{
 			friend CList;
 		private:
+			T m_Info; /*!< Information contenue dans le CNode*/
 			std::shared_ptr <CNode> m_Next; /*!< Pointeur vers l'élément suivant de la liste*/
 			std::shared_ptr <CNode> m_Previous; /*!< Pointeur vers l'élément précédent de la liste*/
-			T m_Info; /*!< Information contenue dans le CNode*/
 		public:
 			/**
 			* \brief Constructeur de CNode

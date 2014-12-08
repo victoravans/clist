@@ -1,18 +1,14 @@
 #include "CList.h"
 #include <iostream>
 #include <list>
+#include "TestV1Unsigned.h"
+#include "TestV1String.h"
 
 using namespace nsSdD;
 using namespace std;
 
-/*int main ()
+int main()
 {
-	CList <int> a (5, 10);
-	const CList <int> b (5, 11);
-	a.reverse ();
+	TestUnsigned();
 
-
-
-	char cChar;
-	cin >> cChar;
-}*/
+}

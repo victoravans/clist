@@ -14,14 +14,14 @@
 
 
 template <class T>
-CLIST::CList ():m_Head (make_shared<CNode> ()), m_Tail (make_shared<CNode> ())
+CLIST::CList ():m_Head (std::make_shared<CNode> ()), m_Tail (std::make_shared<CNode> ())
 {
 	m_Head->m_Next = m_Tail;
 	m_Tail->m_Previous = m_Head;
 }
 
 template <class T>
-CLIST::CList (std::size_t n):m_Head (make_shared<CNode> ()), m_Tail (make_shared<CNode> ())
+CLIST::CList (std::size_t n):m_Head (std::make_shared<CNode> ()), m_Tail (std::make_shared<CNode> ())
 {
 	m_Head->m_Next = m_Tail;
 	m_Tail->m_Previous = m_Head;
@@ -29,7 +29,7 @@ CLIST::CList (std::size_t n):m_Head (make_shared<CNode> ()), m_Tail (make_shared
 }
 
 template <class T>
-CLIST::CList (std::size_t n, const T& val):m_Head (make_shared<CNode> ()), m_Tail (make_shared<CNode> ())
+CLIST::CList (std::size_t n, const T& val):m_Head (std::make_shared<CNode> ()), m_Tail (std::make_shared<CNode> ())
 {
 	m_Head->m_Next = m_Tail;
 	m_Tail->m_Previous = m_Head;
@@ -37,7 +37,7 @@ CLIST::CList (std::size_t n, const T& val):m_Head (make_shared<CNode> ()), m_Tai
 }
 
 template <class T>
-CLIST::CList (const CList& l):m_Head (make_shared<CNode> ()), m_Tail (make_shared<CNode> ())
+CLIST::CList (const CList& l):m_Head (std::make_shared<CNode> ()), m_Tail (std::make_shared<CNode> ())
 {
 	size_t lSize = l.size();
 	m_Head->m_Next = m_Tail;
@@ -352,7 +352,7 @@ void CLIST::sort()
 		Buf.push_front (front());
 		pop_front ();
 		//Remplir le buffer d'éléments croissants
-		while (! (front () < Buf.back ()) )
+		while (! (m_Head->m_Next->m_Info < Buf.m_Tail->m_Previous->m_Info))
 		{
 			Buf.push_back (front ());
 			pop_front ();

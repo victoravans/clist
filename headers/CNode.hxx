@@ -48,19 +48,19 @@ const typename CNODE& CNODE::GetPrevious () const
 }
 
 template <class T>
-typename CNODE::operator T() const
+CNODE::operator T() const
 {
 	return m_Info;
 }
 
 template <class T>
-typename T& CNODE::value()
+T& CNODE::value()
 {
 	return m_Info;
 }
 
 template <class T>
-const typename T& CNODE::value() const
+const T& CNODE::value() const
 {
 	return m_Info;
 }
