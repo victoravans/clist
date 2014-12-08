@@ -1,4 +1,4 @@
-#include "TestV1Unsigned.h"
+#include "TestV1String.h"
 #include <iostream>
 #include <stdlib.h>
 #include <time.h>
@@ -160,17 +160,21 @@ namespace nsSdD{
 	void FrontBackTest(){
 		cout << "Creation d'une liste de taille " << size << " remplie de " << str1
 			<< endl;
-		CList<string>list(size, str1);
+		CList<string>list;
+		list.push_back("abc");
+		list.push_back("def");
+		list.push_back("ghi");
+		list.push_back("jkl");
 		const CList<string>clist = list;
 		cout << "Creation terminee, debut des tests de back() et front()"
 			<< endl
 			<< endl
 			<< endl;
 
-		IZI_ASSERT(list.front().value() == list.front().value());
-		IZI_ASSERT(list.back().value() == list.back().value());
-		IZI_ASSERT(clist.front().value() == list.front().value());
-		IZI_ASSERT(clist.back().value() == list.back().value());
+		IZI_ASSERT(list.front().value() == "abc");
+		IZI_ASSERT(list.back().value() == "jkl");
+		IZI_ASSERT(clist.front().value() == "abc");
+		IZI_ASSERT(clist.back().value() == "jkl");
 
 		cout << "Termine"
 			<< endl;
@@ -183,33 +187,39 @@ namespace nsSdD{
 
 	void PushPopFrontBackTest(){
 		CList<string>list;
-		for (unsigned i = 0; i < 10; list.push_back(i));
-		list.push_front(99);
+		list.push_back("abc");
+		list.push_back("def");
+		list.push_back("ghi");
+		list.push_back("jkl");
+		list.push_back("mno");
+		list.push_back("pqr");
+		
+		list.push_front("aaa");
 
-		IZI_ASSERT(list.front() == 99 && list.front().GetNext() == 0);
+		IZI_ASSERT(list.front().value() == "aaa" && list.front().GetNext().value() == "abc");
 
 		list.pop_front(); list.pop_front();
 
-		IZI_ASSERT(list.front() == 1);
+		IZI_ASSERT(list.front().value() == "def");
 
-		list.push_back(66);
+		list.push_back("zzz");
 
-		IZI_ASSERT(list.back() == 66 && list.back().GetPrevious() == 9);
+		IZI_ASSERT(list.back().value() == "zzz" && list.back().GetPrevious().value() == "pqr");
 
 		list.pop_back(); list.pop_back();
 
-		IZI_ASSERT(list.back() == 8);
+		IZI_ASSERT(list.back().value() == "mno");
 	}//PushPopFrontBackTest
 
 	void SwapTest(){
 		bool swapped = true;
-		CList<unsigned>list;
-		CList<unsigned>list1(size, us1);
-		CList<unsigned>list2 = list1;
+		CList<string>list;
+		CList<string>list1(size, str1);
+		CList<string>list2 = list1;
 		list.swap(list1);
 
 		for (unsigned i(0); swapped && i < size; ++i)
-			swapped = list[i] == list2[i];
+			swapped = list[i].value() == list2[i].value();
 
 		IZI_ASSERT(swapped);
 	}//SwapTest()
@@ -229,32 +239,52 @@ namespace nsSdD{
 	}//ClearTest()
 
 	void RemoveTest(){
-		CList<unsigned>list(size, us1);
-		list.remove(us1);
+		CList<string>list(size, str1);
+		list.remove(str1);
 		IZI_ASSERT(list.size() == 0);
 	}//RemoveTest()
 
 	void InsertTest(){
-		CList<unsigned>list;
-		for (unsigned i = 0; i < 10; list.push_back(i++));
+		CList<string>list;
+		list.push_back("abc");
+		list.push_back("def");
+		list.push_back("ghi");
+		list.push_back("jkl");
+		list.push_back("mno");
+		list.push_back("pqr");
+
 		list.edit(true);
-		list.insert(5, 25);
+		list.insert("ghi", "aaa");
 		list.edit(true);
-		IZI_ASSERT(list[5] == 25);
+		IZI_ASSERT(list[2].value() == "aaa");
 	}//InsertTest()
 
 	void EraseTest(){
-		CList<unsigned>list;
-		for (unsigned n(0); n < size; ++n) { list.push_back(n); }
+		CList<string>list;
+		list.push_back("abc");
+		list.push_back("def");
+		list.push_back("ghi");
+		list.push_back("jkl");
+		list.push_back("mno");
+		list.push_back("pqr");
+
 		list.edit(true);
-		list.erase(3);
-		IZI_ASSERT(list[3] == 4);
+		list.erase("def");
+		IZI_ASSERT(list[1].value() == "ghi");
 	}//EraseTest()
 
 	void UniqueTest(){
 		bool unique = true;
-		CList<unsigned>list;
-		for (unsigned n(0); n < size; ++n) { list.push_back(n); list.push_back(n); }
+		CList<string>list;
+		list.push_back("abc");
+		list.push_back("abc");
+		list.push_back("def");
+		list.push_back("def");
+		list.push_back("ghi");
+		list.push_back("ghi");
+		list.push_back("jkl");
+		list.push_back("jkl");
+
 		list.edit(true);
 		cout << endl;
 		list.unique();
@@ -262,36 +292,44 @@ namespace nsSdD{
 		cout << endl;
 
 		for (unsigned i(2); unique && i < list.size(); ++i)
-			unique = list[i - 1] != list[i - 2] && list[i - 1] != list[i];
+			unique = list[i - 1].value() != list[i - 2].value() && list[i - 1].value() != list[i].value();
 
 		IZI_ASSERT(unique);
 	}//UniqueTest()
 
 	void SortTest(){
 		bool sorted = true;
-		CList<unsigned>list;
-		for (unsigned n = 0; n < 10; ++n)
-			list.push_back(rand() % 10);
+		CList<string>list;
+		list.push_back("ghi");
+		list.push_back("jkl");
+		list.push_back("def");
+		list.push_back("abc");
+
 		list.edit(true);
 		list.sort();
 		list.edit(true);
 
 
 		for (unsigned i(0); sorted && i < list.size() - 1; ++i)
-			sorted = (list[i] <= list[i + 1]);
+			sorted = (list[i].value() <= list[i + 1].value());
 
 		IZI_ASSERT(sorted);
 	}//SortTest()
 
 	void MergeTest(){
 		bool merged = true;
-		CList<unsigned>list1;
-		CList<unsigned>list2;
-		for (unsigned n = 0; n < 10; ++n)
-		{
-			list1.push_back(rand() % 10);
-			list2.push_back(rand() % 10);
-		}
+		CList<string>list1;
+		CList<string>list2;
+		list1.push_back("ghi");
+		list1.push_back("jkl");
+		list1.push_back("def");
+		list1.push_back("abc");
+
+		list2.push_back("jkl");
+		list2.push_back("def");
+		list2.push_back("ghi");
+		list2.push_back("abc");
+
 		list1.sort();
 		list2.sort();
 		list1.edit(true);
@@ -300,31 +338,33 @@ namespace nsSdD{
 		list1.edit(true);
 
 		for (unsigned i(0); merged && i < list1.size() - 1; ++i)
-			merged = (list1[i] <= list1[i + 1]);
+			merged = (list1[i].value() <= list1[i + 1].value());
 		merged = (list1.size() == 20);
 		IZI_ASSERT(merged);
 	}//MergeTest()
 
 	void ReverseTest(){
 		bool reversed = true;
-		CList<unsigned>list;
-		CList<unsigned>wlist;
-		for (unsigned n = 0; n < 10; ++n)
-			list.push_back(rand() % 10);
+		CList<string>list;
+		CList<string>wlist;
+		list.push_back("abc");
+		list.push_back("def");
+		list.push_back("ghi");
+		list.push_back("jkl");
 		wlist = list;
+
 		list.edit(true);
 		list.reverse();
 		list.edit(true);
 
 		for (unsigned i(0); reversed && i < list.size(); ++i)
-			reversed = list[i] == wlist[9 - i];
+			reversed = list[i].value() == wlist[wlist.size()-1 - i].value();
 
 		IZI_ASSERT(reversed);
 	}//ReverseTest()
 
-	void TestUnsigned(){
-		unsigned value(14);
-		unsigned value1(8);
+	void TestString(){
+
 		ConstructorTest();
 		EmptyTest();
 		Size_tTest();
@@ -348,8 +388,8 @@ namespace nsSdD{
 
 }// namespace
 
-/*int main()
+int main()
 {
-TestUnsigned();
+TestString();
 return 0;
-}*/
+}

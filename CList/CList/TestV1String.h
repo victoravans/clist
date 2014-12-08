@@ -42,5 +42,5 @@ namespace nsSdD{
 
 	void ReverseTest();
 
-	void TestUnsigned();
+	void TestString();
 }//namespace nsSdD
