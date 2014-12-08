@@ -80,7 +80,6 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\hichemTestUnsigned.cxx" />
     <ClCompile Include="..\..\src\main.cxx" />
     <ClCompile Include="TestV1.cpp" />
     <ClCompile Include="TestV1String.cpp" />
@@ -90,7 +89,6 @@
     <ClInclude Include="..\..\headers\CList.h" />
     <ClInclude Include="..\..\headers\CList.hxx" />
     <ClInclude Include="..\..\headers\CNode.hxx" />
-    <ClInclude Include="..\..\headers\hichemTestUnsigned.h" />
     <ClInclude Include="..\..\headers\IziAssert.h" />
     <ClInclude Include="TestV1String.h" />
     <ClInclude Include="TestV1Unsigned.h" />

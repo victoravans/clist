@@ -12,35 +12,35 @@ using namespace nsSdD;
 
 namespace nsSdD{
 
-	void ConstructorTest();
+	void StringConstructorTest();
 
-	void EmptyTest();
+	void StringEmptyTest();
 
-	void Size_tTest();
+	void StringSize_tTest();
 
-	void FrontBackTest();
+	void StringFrontBackTest();
 
-	void PushPopFrontBackTest();
+	void StringPushPopFrontBackTest();
 
-	void SwapTest();
+	void StringSwapTest();
 
-	void ResizeTest();
+	void StringResizeTest();
 
-	void ClearTest();
+	void StringClearTest();
 
-	void RemoveTest();
+	void StringRemoveTest();
 
-	void InsertTest();
+	void StringInsertTest();
 
-	void EraseTest();
+	void StringEraseTest();
 
-	void UniqueTest();
+	void StringUniqueTest();
 
-	void SortTest();
+	void StringSortTest();
 
-	void MergeTest();
+	void StringMergeTest();
 
-	void ReverseTest();
+	void StringReverseTest();
 
 	void TestString();
 }//namespace nsSdD

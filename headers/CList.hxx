@@ -352,7 +352,7 @@ void CLIST::sort()
 		Buf.push_front (front());
 		pop_front ();
 		//Remplir le buffer d'éléments croissants
-		while (! (front () < Buf.back ()) )
+		while (! (m_Head->m_Next->m_Info < Buf.m_Tail->m_Info) )
 		{
 			Buf.push_back (front ());
 			pop_front ();

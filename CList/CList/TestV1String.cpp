@@ -9,12 +9,16 @@
 using namespace std;
 using namespace nsSdD;
 
+namespace {
+	size_t size = 10;
+}
+
 namespace nsSdD{
 	string str1 = "abc";
 	string str2 = "def";
 	size_t size = 10;
 
-	void ConstructorTest() {
+	void StringConstructorTest() {
 		bool constructor1 = true;
 		bool constructor2 = true;
 		bool constructor3 = true;
@@ -99,7 +103,7 @@ namespace nsSdD{
 
 	}//ConstructorTest()
 
-	void EmptyTest(){
+	void StringEmptyTest(){
 		bool emptylist = true;
 		bool emptyclist = true;
 		bool notemptylist1 = true;
@@ -136,7 +140,7 @@ namespace nsSdD{
 	}//EmptyTest()
 
 
-	void Size_tTest(){
+	void StringSize_tTest(){
 		cout << "Creation d'une liste de taille " << size << "."
 			<< endl;
 		CList<string>list(size);
@@ -157,7 +161,7 @@ namespace nsSdD{
 
 	}//Size_tTest()
 
-	void FrontBackTest(){
+	void StringFrontBackTest(){
 		cout << "Creation d'une liste de taille " << size << " remplie de " << str1
 			<< endl;
 		CList<string>list;
@@ -185,7 +189,7 @@ namespace nsSdD{
 
 	}//FrontBackTest()
 
-	void PushPopFrontBackTest(){
+	void StringPushPopFrontBackTest(){
 		CList<string>list;
 		list.push_back("abc");
 		list.push_back("def");
@@ -211,7 +215,7 @@ namespace nsSdD{
 		IZI_ASSERT(list.back().value() == "mno");
 	}//PushPopFrontBackTest
 
-	void SwapTest(){
+	void StringSwapTest(){
 		bool swapped = true;
 		CList<string>list;
 		CList<string>list1(size, str1);
@@ -224,7 +228,7 @@ namespace nsSdD{
 		IZI_ASSERT(swapped);
 	}//SwapTest()
 
-	void ResizeTest(){
+	void StringResizeTest(){
 		CList<unsigned>list(size);
 		list.resize(size + 2);
 		IZI_ASSERT(list.size() == size + 2);
@@ -232,19 +236,19 @@ namespace nsSdD{
 		IZI_ASSERT(list.size() == size);
 	}//ResizeTest()
 
-	void ClearTest(){
+	void StringClearTest(){
 		CList<unsigned>list(size);
 		list.clear();
 		IZI_ASSERT(list.size() == 0);
 	}//ClearTest()
 
-	void RemoveTest(){
+	void StringRemoveTest(){
 		CList<string>list(size, str1);
 		list.remove(str1);
 		IZI_ASSERT(list.size() == 0);
 	}//RemoveTest()
 
-	void InsertTest(){
+	void StringInsertTest(){
 		CList<string>list;
 		list.push_back("abc");
 		list.push_back("def");
@@ -259,7 +263,7 @@ namespace nsSdD{
 		IZI_ASSERT(list[2].value() == "aaa");
 	}//InsertTest()
 
-	void EraseTest(){
+	void StringEraseTest(){
 		CList<string>list;
 		list.push_back("abc");
 		list.push_back("def");
@@ -273,7 +277,7 @@ namespace nsSdD{
 		IZI_ASSERT(list[1].value() == "ghi");
 	}//EraseTest()
 
-	void UniqueTest(){
+	void StringUniqueTest(){
 		bool unique = true;
 		CList<string>list;
 		list.push_back("abc");
@@ -297,7 +301,7 @@ namespace nsSdD{
 		IZI_ASSERT(unique);
 	}//UniqueTest()
 
-	void SortTest(){
+	void StringSortTest(){
 		bool sorted = true;
 		CList<string>list;
 		list.push_back("ghi");
@@ -316,22 +320,20 @@ namespace nsSdD{
 		IZI_ASSERT(sorted);
 	}//SortTest()
 
-	void MergeTest(){
+	void StringMergeTest(){
 		bool merged = true;
 		CList<string>list1;
 		CList<string>list2;
+		list1.push_back("abc");
+		list1.push_back("def");
 		list1.push_back("ghi");
 		list1.push_back("jkl");
-		list1.push_back("def");
-		list1.push_back("abc");
 
-		list2.push_back("jkl");
+		list2.push_back("abc");
 		list2.push_back("def");
 		list2.push_back("ghi");
-		list2.push_back("abc");
+		list2.push_back("jkl");
 
-		list1.sort();
-		list2.sort();
 		list1.edit(true);
 		list2.edit(true);
 		list1.merge(list2);
@@ -343,7 +345,7 @@ namespace nsSdD{
 		IZI_ASSERT(merged);
 	}//MergeTest()
 
-	void ReverseTest(){
+	void StringReverseTest(){
 		bool reversed = true;
 		CList<string>list;
 		CList<string>wlist;
@@ -365,21 +367,21 @@ namespace nsSdD{
 
 	void TestString(){
 
-		ConstructorTest();
-		EmptyTest();
-		Size_tTest();
-		FrontBackTest();
-		PushPopFrontBackTest();
-		SwapTest();
-		ResizeTest();
-		ClearTest();
-		RemoveTest();
-		InsertTest();
-		EraseTest();
-		UniqueTest();
-		SortTest();
-		MergeTest();
-		ReverseTest();
+		StringConstructorTest();
+		StringEmptyTest();
+		StringSize_tTest();
+		StringFrontBackTest();
+		StringPushPopFrontBackTest();
+		StringSwapTest();
+		StringResizeTest();
+		StringClearTest();
+		StringRemoveTest();
+		StringInsertTest();
+		StringEraseTest();
+		StringUniqueTest();
+		StringSortTest();
+		StringMergeTest();
+		StringReverseTest();
 
 		char c;
 		cin >> c;
@@ -390,6 +392,6 @@ namespace nsSdD{
 
 int main()
 {
-TestString();
-return 0;
+	TestString();
+	return 0;
 }
